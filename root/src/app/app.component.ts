@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ResponseData} from './processor/app.responsedata';
+import { ResponseData} from './sheep-processor/app.responsedata';
 
 @Component({
   selector: 'sheep-main',

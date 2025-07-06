@@ -1,0 +1,63 @@
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
+<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
+<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * Delete the template below * * * * * * * * * * -->
+<!-- * * * * * * * to get started with your project! * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+
+<style>
+</style>
+
+
+<div class="content" role="main">
+  {{mainMessage}}
+  <!-- Highlight Card -->
+  <div>
+    <textarea type="string" class="wide-text-area" name="inputtextboxname" rows="10" (change)=makeDisplayPost() [(ngModel)]="inputText"></textarea>
+    <textarea type="string" class="wide-text-area" name="posttextboxname" rows="10" [(ngModel)]="displayPost"></textarea>
+
+    <br/> <br/>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Question Number</mat-label>
+      <mat-select [(value)]="inputQuestionNum" (selectionChange)="questionNumberChanged()">
+        <mat-option *ngFor="let question of responseData.questions" [value]="question.questionNum">
+          {{question.questionNum}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Delimiter</mat-label>
+      <mat-select [(value)]="newDelimiter" (selectionChange)="makeInputTextFromResponseData()">
+        <mat-option *ngFor="let delimiter of delimiters" [value]="delimiter">
+          '{{delimiter}}'
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+  </div>
+
+  After responses are entered above, you can clean data by converting one response to another below.<br/>
+  Click a response button to select it, then click another response button to convert it to the selected response.<br/>
+  When done, click the original response to deselect it.<br/><br/>
+  Note the responses will also be changed in the original output, but remember this output isn't saved anywhere. (You'll need to copy it to save the cleaned data.)
+  <div *ngFor="let response of responseData.getResponsesOrEmptyForQuestion(inputQuestionNum); let i = index;">
+    <button *ngIf="i != copiedResponseLineIndex && response != copiedResponse" (click)="responseButtonClick(inputQuestionNum - 1, i)"> {{response}}</button>
+    <button *ngIf="i != copiedResponseLineIndex && response == copiedResponse" class="pink-button" (click)="responseButtonClick(inputQuestionNum - 1, i)"> {{response}}</button>
+    <button *ngIf="i == copiedResponseLineIndex" class="red-button" (click)="responseButtonClick(inputQuestionNum - 1, i)"> {{response}}</button>
+  </div>
+
+</div>
+
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * The content above * * * * * * * * * * * -->
+<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
+<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+

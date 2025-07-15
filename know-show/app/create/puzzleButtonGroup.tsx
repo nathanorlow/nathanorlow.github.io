@@ -1,48 +1,40 @@
-import { Button } from "@mui/material";
-import { wordWithoutHyphens } from "./puzzleDisplay";
+import { Button, styled, type ButtonProps } from "@mui/material";
+import { wordWithoutHyphens } from "./puzzleInterface";
+import { grey } from "@mui/material/colors";
 
 interface PuzzleButtonGroupProps {
-    puzzleWords : string[];
-    toggleWordByIndex: (index: number) => void;
+    buttonWords : string[]; //word object to display in the button group
+    onClickAction: (index: number) => void; //action to assign to the buttons
 }
 
 export function PuzzleButtonGroup(props : PuzzleButtonGroupProps){
-    const puzzleWords : string[] = props.puzzleWords;
+    const puzzleWords : string[] = props.buttonWords;
     if(!puzzleWords){
-        return(
-            <div>Nothing to list</div>
-        )
+        return(<div></div>);
     }
 
     const puzzleButtons = puzzleWords.map(
         (word, index) =>
-        { return (
-            <Button 
-                color={word.startsWith('-') ? "success" : "secondary"}
+        { 
+            const StyledButton = word.startsWith('-') ? 
+            styled(Button)<ButtonProps>( ({theme}) => ({
+                color: theme.palette.getContrastText(grey[900]),
+                backgroundColor: grey[900]
+            })) : 
+            styled(Button)<ButtonProps>( ({theme}) => ({
+                color: theme.palette.getContrastText(grey[100]),
+                backgroundColor: grey[100]
+            }));
+
+            return (
+            <StyledButton 
                 key={"button_" + index} 
-                onClick={() => props.toggleWordByIndex(index)}
+                onClick={() => props.onClickAction(index)}
             >
                 {wordWithoutHyphens(word)}
-            </Button> 
+            </StyledButton>
         ) }
     );
-
-    const puzzleButtonsNew = (
-            <div><Button key="first">First</Button><Button key="second">Second</Button></div>
-    );
-
-    /*const puzzleButtons = puzzleWords.map(
-        word =>
-        { return (
-            <Button 
-                key={word} 
-                onClick={() => props.toggleWordByIndex(1)}
-            >
-                {"?" + word + "?"}
-            </Button>
-        ) }
-    );*/
-
-    
-    return puzzleButtons ;
+        
+    return puzzleButtons;
 }

@@ -1,18 +1,24 @@
+import { ROWS_FOR_TEXT_AREA } from "./create";
+
 interface LinkDisplayProps {
-    encodedLinkString : any;
-    rowsForTextArea: number;
+    labelText: string; //label to display
+    linkText: string; //String to display
 }
 
 export function LinkDisplay(props : LinkDisplayProps){
     return(
         <div>
-        <label className="largeText">A link to this puzzle is</label>
+        <label className="largeText">{props.labelText}</label>
         <br />
         <textarea
-        readOnly
-        value={props.encodedLinkString}
-        rows={props.rowsForTextArea}
+            readOnly
+            value={props.linkText}
+            rows={ROWS_FOR_TEXT_AREA}
         />
         </div>
     );
+}
+
+export function encodeLink(inputString: string): string {
+    return inputString.replaceAll(" ", "-");
 }

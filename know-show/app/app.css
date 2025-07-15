@@ -45,3 +45,14 @@ textarea {
   border: 3px;
   width: 60%;
 }
+
+.buttonMain {
+  background-color: white;
+  
+  color: black;
+}
+
+.buttonDark {
+  background-color: black;
+  color: white;
+}

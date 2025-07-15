@@ -1,44 +1,43 @@
 import { useState } from "react";
 import { PuzzleTextEntry } from "./puzzleTextEntry";
 import { LinkDisplay } from "./linkDisplay";
-import { PuzzleDisplay } from "./puzzleDisplay";
-import { Button } from "@mui/material";
+import { PuzzleInterface } from "./puzzleInterface";
+
+export const ROWS_FOR_TEXT_AREA = 7;
+
+
+declare module '@mui/material/Button' {
+  interface ButtonPropsColorOverrides {
+    custom: true;
+  }
+}
 
 export function Create() {
   const [puzzleString, setPuzzleString] = useState('');
   const [encodedLinkString, setEncodedLinkString] = useState('');
-  const rowsForTextArea = 7;
 
   return (
     <div className="centerMiddle">
       <div className="lightStyle">
         <PuzzleTextEntry
-          setEncodedLinkString={setEncodedLinkString}
-          puzzleString = {puzzleString}
-          setPuzzleString = {setPuzzleString}
-          rowsForTextArea={rowsForTextArea}
+          labelForTextArea = "Enter Puzzle Text"
+          puzzleTextAreaString = {puzzleString}
+          savePuzzleTextAreaString = {setPuzzleString}
+          updateEncodedLinkString = {setEncodedLinkString}
         />
       </div>
       <br />
-      <Button
-        key="material"
-        onClick={() => {
-          alert('clicked');
-        }}
-      >
-        Click me
-      </Button>
       <div className="lightStyle">
-        <PuzzleDisplay 
+        <PuzzleInterface 
           puzzleString={puzzleString}
-          setPuzzleString = {setPuzzleString}          
+          savePuzzleString = {setPuzzleString}
         />
       </div>
       <br />
       <div className="mediumStyle">
         <LinkDisplay 
-          encodedLinkString={encodedLinkString}
-          rowsForTextArea={rowsForTextArea}
+          labelText="A link to this puzzle is"
+          linkText={encodedLinkString}
         />
       </div>
     </div>

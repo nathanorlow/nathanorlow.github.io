@@ -1,5 +1,5 @@
 import { Button, styled, type ButtonProps } from "@mui/material";
-import { wordWithoutHyphens } from "./puzzleInterface";
+import { getBaseWord } from "./puzzleInterface";
 import { grey } from "@mui/material/colors";
 
 interface PuzzleButtonGroupProps {
@@ -24,7 +24,7 @@ export function PuzzleButtonGroup(props : PuzzleButtonGroupProps){
                 key={"button_" + index} 
                 onClick={() => props.onClickAction(index)}
             >
-                {wordWithoutHyphens(word)}
+                {getBaseWord(word)}
             </StyledButton>
         ) }
     );
@@ -36,11 +36,11 @@ function makeStyledButtonForFirstCharacter(firstCharacter: string){
     if(firstCharacter === "-"){
         return styled(Button)<ButtonProps>( (
             {theme}) => ({
-                color: theme.palette.getContrastText(grey[900]),
+                color: grey[900],
                 backgroundColor: grey[900]
             })
         );
-    } else if(firstCharacter === '~'){ //unused
+    } else if(firstCharacter === '~'){
         return styled(Button)<ButtonProps>( (
             {theme}) => ({
                 color: theme.palette.getContrastText(grey[400]),

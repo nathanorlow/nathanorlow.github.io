@@ -1,18 +1,17 @@
+import { useState } from "react";
 import { PuzzleButtonGroup } from "./puzzleButtonGroup";
 
 //Puzzle interface for viewing and modifying the puzzleString
 
-const delimiter = ' ';
+const delimiter = '_';
 
 interface PuzzleInterfaceProps {
-    puzzleString : string; //The string to display in the interface
-    savePuzzleString: (puzzleString: string) => void //a function to save puzzleString changes from the display
+    initialPuzzleString : string; //The string to display in the interface
 }
 
 export function PuzzleInterface(props : PuzzleInterfaceProps){
-    const setPuzzleString = props.savePuzzleString;
+  const [puzzleString, setPuzzleString] = useState(props.initialPuzzleString);
 
-    const puzzleString : string = props.puzzleString;
     if(!puzzleString){
         return(<div></div>);
     }
@@ -36,13 +35,18 @@ function toggleWord(word: string): string {
         return ""
     };
 
+    console.log("Toggling " + word);
+    //For unrevealed words, reveal (with tildes)
+    //otherwise do nothing
     if(word.startsWith('-')){
-        return wordWithoutHyphens(word);
+        const returnWord = '~' + getBaseWord(word) + '~';
+        console.log("Returning " + returnWord);
+        return returnWord;
     }else{
-        return '-' + wordWithoutHyphens(word) + '-';
+        return word;
     }
 }
 
-export function wordWithoutHyphens(word: string): string {
-    return word.replaceAll('-', '')
+export function getBaseWord(word: string): string {
+    return word.replaceAll(/-|~/g, '');
 }

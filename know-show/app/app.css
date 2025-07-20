@@ -35,6 +35,10 @@ body {
   background-color: cornflowerblue;
 }
 
+.formContainer {
+  background-color: mediumblue;
+  padding: 10px;
+}
 textarea {
   display: block;
   margin: auto;
@@ -44,6 +48,17 @@ textarea {
 .textAreaDefault {
   border: 3px;
   width: 60%;
+}
+
+.answerEntry {
+  background-color: gray;
+  display:block;
+  margin:auto;
+}
+
+.submitButton {
+  display:block;
+  margin:auto;
 }
 
 .buttonMain {

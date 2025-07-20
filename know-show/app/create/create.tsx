@@ -4,6 +4,8 @@ import { LinkDisplay } from "./linkDisplay";
 import { PuzzleInterface } from "./puzzleInterface";
 
 export const ROWS_FOR_TEXT_AREA = 7;
+export const DEFAULT_PUZZLE_ANSWER = 'Puzzle Answer';
+export const DEFAULT_PUZZLE_STRING = 'Put puzzle here and click words below to #hide# #words#';
 
 
 declare module '@mui/material/Button' {
@@ -13,14 +15,18 @@ declare module '@mui/material/Button' {
 }
 
 export function Create() {
-  const [puzzleString, setPuzzleString] = useState('');
+  const [puzzleAnswer, setPuzzleAnswer] = useState(DEFAULT_PUZZLE_ANSWER);
+  const [puzzleString, setPuzzleString] = useState(DEFAULT_PUZZLE_STRING);
   const [encodedLinkString, setEncodedLinkString] = useState('');
 
   return (
     <div className="centerMiddle">
       <div className="lightStyle">
         <PuzzleTextEntry
-          labelForTextArea = "Enter Puzzle Text"
+          puzzleAnswerLabel="Enter Puzzle Answer"
+          puzzleAnswer={puzzleAnswer}
+          savePuzzleAnswer={setPuzzleAnswer}
+          textAreaLabel = "Enter Puzzle Text"
           puzzleTextAreaString = {puzzleString}
           savePuzzleTextAreaString = {setPuzzleString}
           updateEncodedLinkString = {setEncodedLinkString}

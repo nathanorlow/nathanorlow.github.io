@@ -1,8 +1,12 @@
+import { COMPONENT_DELIMITER } from "~/constants";
 import { ROWS_FOR_TEXT_AREA } from "./create";
-import { encodeLink as encodeAsLink } from "./linkDisplay";
+import { encodeLink } from "./linkDisplay";
 
 interface PuzzleTextEntryProps {
-    labelForTextArea: string; //Label to display by text area
+    puzzleAnswerLabel: string;
+    puzzleAnswer: string;
+    savePuzzleAnswer: (puzzleAnswer: string) => void;
+    textAreaLabel: string; //Label to display by text area
     puzzleTextAreaString: string; //Puzzle string to display in its text area
     savePuzzleTextAreaString: (puzzleTextAreaString: string) => void; //Function to save the string outside this component
     updateEncodedLinkString: (encodedLinkString: string) => void; //Function to save the encoded link string
@@ -10,15 +14,27 @@ interface PuzzleTextEntryProps {
 
 export function PuzzleTextEntry(props: PuzzleTextEntryProps){
 
+const handlePuzzleAnswerChange = (changeEvent: any) => {
+    const newPuzzleAnswer = changeEvent.target.value;
+    props.savePuzzleAnswer(newPuzzleAnswer);
+}
+
 const handlePuzzleTextAreaChange = (changeEvent: any) => {
     const textAreaString = changeEvent.target.value;
     props.savePuzzleTextAreaString(textAreaString);
-    props.updateEncodedLinkString(encodeAsLink(textAreaString));
+    const answerAndTextAreaString = props.puzzleAnswer + COMPONENT_DELIMITER + textAreaString;
+    props.updateEncodedLinkString(encodeLink(answerAndTextAreaString));
 };
 
     return(
         <div>
-            <label className="largeText">{props.labelForTextArea}</label> <br />
+            <label className="largeText">{props.puzzleAnswerLabel}</label> <br />
+            <textarea
+                onChange={handlePuzzleAnswerChange}
+                rows={1}
+            />
+
+            <label className="largeText">{props.textAreaLabel}</label> <br />
             <textarea
                 value={props.puzzleTextAreaString}
                 onChange={handlePuzzleTextAreaChange}

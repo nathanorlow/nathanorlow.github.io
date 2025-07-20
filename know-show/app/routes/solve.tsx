@@ -3,7 +3,7 @@ import { Solve } from "../solve/solve";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Know Show Solvee" },
+    { title: "Know Show Solve" },
     { name: "description", content: "Know Show Solve page" },
   ];
 }

@@ -13,14 +13,17 @@ declare module '@mui/material/Button' {
 
 export function Solve() {
   const {encodedString} = useParams();
-  //TODO: convert encodedString to puzzleString
+  if(encodedString == null){
+    return <a href="/solve">Use Solve page to generate a link!</a>;
+  }
+  const puzzleString = atob(encodedString as string); //use base 64 decode
 
   return (
     <div className="centerMiddle">
       <div className="lightStyle">
-        {encodedString}<br />
+        {puzzleString}<br />
         <PuzzleInterface 
-          initialPuzzleString={encodedString ?? ''}
+          initialPuzzleString={puzzleString ?? ''}
         />
       </div>
     </div>

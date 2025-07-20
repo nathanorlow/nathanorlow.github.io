@@ -20,5 +20,8 @@ export function LinkDisplay(props : LinkDisplayProps){
 }
 
 export function encodeLink(inputString: string): string {
-    return inputString.replaceAll(" ", "-");
+    const sanitizedString = inputString;
+    const encodedLinkStringWithEquals = btoa(sanitizedString); //base 64 encode
+    const encodedLinkString = encodedLinkStringWithEquals.replaceAll("=",""); //base 64 encode
+    return encodedLinkString;
 }

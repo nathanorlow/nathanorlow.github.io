@@ -1,6 +1,7 @@
 import { Button, styled, type ButtonProps } from "@mui/material";
-import { getBaseWord } from "./puzzleInterface";
+import { getBaseWord } from "~/util/modifyWord";
 import { grey } from "@mui/material/colors";
+import { MARK_HIDDEN, MARK_REVEALED } from "~/constants";
 
 interface PuzzleButtonGroupProps {
     buttonWords : string[]; //word object to display in the button group
@@ -33,14 +34,14 @@ export function PuzzleButtonGroup(props : PuzzleButtonGroupProps){
 }
 
 function makeStyledButtonForFirstCharacter(firstCharacter: string){
-    if(firstCharacter === "-"){
+    if(firstCharacter === MARK_HIDDEN){
         return styled(Button)<ButtonProps>( (
             {theme}) => ({
                 color: grey[900],
                 backgroundColor: grey[900]
             })
         );
-    } else if(firstCharacter === '~'){
+    } else if(firstCharacter === MARK_REVEALED){
         return styled(Button)<ButtonProps>( (
             {theme}) => ({
                 color: theme.palette.getContrastText(grey[400]),

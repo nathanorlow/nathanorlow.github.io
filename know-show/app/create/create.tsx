@@ -31,6 +31,7 @@ export function Create() {
         <PuzzleInterface 
           puzzleString={puzzleString}
           savePuzzleString = {setPuzzleString}
+          updateEncodedLinkString = {setEncodedLinkString}
         />
       </div>
       <br />

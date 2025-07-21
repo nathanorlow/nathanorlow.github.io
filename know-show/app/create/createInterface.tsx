@@ -1,17 +1,17 @@
 import { WORD_DELIMITER} from "~/constants";
-import { PuzzleButtonGroup } from "./puzzleButtonGroup";
+import { makeShowButtonForFirstCharacter, makeShowButtonSX, PuzzleButtonGroup } from "../common/puzzleButtonGroup";
 import { toggleWordHiddenFormat } from "~/util/modifyWord";
 import { encodeLink } from "./linkDisplay";
 
 //Puzzle interface for viewing and modifying the puzzleString
 
-interface PuzzleInterfaceProps {
+interface CreateInterfaceProps {
     puzzleString : string; //The string to display in the interface
     savePuzzleString: (puzzleString: string) => void //a function to save puzzleString changes from the display
     updateEncodedLinkString: (encodedLinkString: string) => void //a function to update the link
 }
 
-export function PuzzleInterface(props : PuzzleInterfaceProps){
+export function CreateInterface(props : CreateInterfaceProps){
     const setPuzzleString = props.savePuzzleString;
     const updateEncodedLinkString = props.updateEncodedLinkString;
 
@@ -33,6 +33,8 @@ export function PuzzleInterface(props : PuzzleInterfaceProps){
             <PuzzleButtonGroup 
                 buttonWords={puzzleWords} 
                 onClickAction={toggleWordByIndex}
+               //makeStyledButtonForString={makeShowButtonForFirstCharacter}
+               makeStyledButtonForString={makeShowButtonSX}
             />
         </div>);
 }

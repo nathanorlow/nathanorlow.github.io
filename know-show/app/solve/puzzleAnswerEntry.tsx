@@ -19,7 +19,6 @@ export function PuzzleAnswerEntry(props: PuzzleAnswerEntryProps){
         props.checkAndUpdateIsSolved(enteredAnswer);
     }
 
-    //            <label className="largeText">{props.puzzleAnswerLabel}</label> <br />
     return (
         <div className="formContainer">
             <form onSubmit={handleSubmit}>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PuzzleInterface } from "./puzzleInterface";
+import { PuzzleInterface } from "./solveInterface";
 import { useParams } from "react-router";
 import { COMPONENT_DELIMITER } from "~/constants";
 

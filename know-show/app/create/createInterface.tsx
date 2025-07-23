@@ -31,10 +31,10 @@ export function CreateInterface(props : CreateInterfaceProps){
 
     return(<div>
             <PuzzleButtonGroup 
-                buttonWords={puzzleWords} 
-                onClickAction={toggleWordByIndex}
-               //makeStyledButtonForString={makeShowButtonForFirstCharacter}
-               makeStyledButtonForString={makeShowButtonSX}
+                buttonArray={[]}
+                //buttonWords={puzzleWords} 
+                //onClickAction={toggleWordByIndex}
+               //makeStyledButtonForString={makeShowButtonSX}
             />
         </div>);
 }

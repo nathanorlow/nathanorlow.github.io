@@ -6,49 +6,40 @@ import { MARK_HIDDEN, MARK_SHOWN } from "~/constants";
 //This is a more general button group
 //it displays a series of strings on buttons
 //the button style depends on the text
+
 interface PuzzleButtonGroupProps {
-    //TODO: maybe pass in the word/sx array
+    buttonArray : any[];
+}
+
+export interface PuzzleButtonGroupConfig {
     buttonWords : string[]; //word object to display in the button group
     onClickAction: (index: number) => void; //action to assign to the buttons
     makeStyledButtonForString: (inputString: string) => any;
 }
 
 export function PuzzleButtonGroup(props : PuzzleButtonGroupProps){
-    const puzzleWords : string[] = props.buttonWords;
-    if(!puzzleWords){
-        return(<div></div>);
-    }
+    return (props.buttonArray);
+}
 
-    const puzzleButtons = puzzleWords.map(
+export function createButtonsFromConfig(config: PuzzleButtonGroupConfig) : React.ReactElement[] {
+    const createdButtons = config.buttonWords.map(
         (word, index) =>
         { 
             const firstCharacter = word.substring(0,1);
-            //const StyledButton = props.makeStyledButtonForString(firstCharacter);
+            const buttonSx = config.makeStyledButtonForString(firstCharacter);
 
-            const buttonSx = props.makeStyledButtonForString(firstCharacter);
             return (
             <Button 
                 key={"button_" + index} 
-                onClick={() => props.onClickAction(index)}
+                onClick={() => config.onClickAction(index)}
                 sx={buttonSx}
             >
                 {getBaseWord(word)}
             </Button>)
-
-            /*
-            return (
-            <StyledButton 
-                key={"button_" + index} 
-                onClick={() => props.onClickAction(index)}
-            >
-                {getBaseWord(word)}
-            </StyledButton>)*/
-
         }
     );
-        
-    return puzzleButtons;
-}
+    return createdButtons;
+};
 
 export function makeSolveButtonSX(firstCharacter: string){
     //p = padding

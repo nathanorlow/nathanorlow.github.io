@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { makeShowButtonForFirstCharacter, makeShowButtonSX, makeSolveButtonForFirstCharacter, makeSolveButtonSX, PuzzleButtonGroup } from "../common/puzzleButtonGroup";
+import { createButtonsFromConfig, makeShowButtonForFirstCharacter, makeShowButtonSX, makeSolveButtonForFirstCharacter, makeSolveButtonSX, PuzzleButtonGroup, type PuzzleButtonGroupConfig } from "../common/puzzleButtonGroup";
 import { MARK_HIDDEN, WORD_DELIMITER } from "~/constants";
 import { getBaseWord, toHiddenUnlessSpace, toRevealedWordIfHidden } from "~/util/modifyWord";
 import { PuzzleAnswerEntry } from "./puzzleAnswerEntry";
@@ -17,19 +17,59 @@ export function PuzzleInterface(props : PuzzleInterfaceProps){
     const [isSolved, setIsSolved] = useState(false);
     //TODO: Need to add solution to link string in all update cases
 
+    const initialAnswerButtons =  createAnswerButtons(formattedAnswerLetters);
+
+    const initialPuzzleButtons = createPuzzleButtons(makePuzzleWordsFromPuzzleString(puzzleString));
+
+
+    const defaultButtonArray : Array<React.ReactElement> = [];
+    const [formattedAnswerButtons, setFormattedAnswerButtons] = useState(defaultButtonArray);
+
+    const [formattedPuzzleButtons, setFormattedPuzzleButtons] = useState(defaultButtonArray);
+    
     if(!puzzleString){
         return(<div></div>);
     }
-    const puzzleWords : string[] = puzzleString.split(WORD_DELIMITER);
+
+    const makePuzzleWordsFromPuzzleString = (inputPuzzleString : string): string[] => {
+        return puzzleString.split(WORD_DELIMITER);
+    }
     
-    const toggleWordByIndex = (index: number) => {
-        puzzleWords[index] = toRevealedWordIfHidden(puzzleWords[index]);
+    const toggleWordByIndex = (desiredIndex: number) => {
+        const puzzleWords = makePuzzleWordsFromPuzzleString(puzzleString);
+        const updatedPuzzleWords = puzzleWords.map((word:string, index:number) => index === desiredIndex ? toRevealedWordIfHidden(word) : word);
         setPuzzleString(puzzleWords.join(WORD_DELIMITER));
+        const puzzleButtons = createPuzzleButtons(puzzleWords);
+        setFormattedPuzzleButtons(puzzleButtons);
+    }
+
+    const createPuzzleButtons = (puzzleWords: string[]): React.ReactElement[] => {
+        const puzzleButtonGroupConfig : PuzzleButtonGroupConfig =
+        {
+            buttonWords:  puzzleWords,
+            onClickAction: toggleWordByIndex,
+            makeStyledButtonForString: makeSolveButtonSX
+        }
+        const updatedPuzzleButtons = createButtonsFromConfig(puzzleButtonGroupConfig);
+        return updatedPuzzleButtons;
     }
 
     const updateAnswerLetterByIndex = (indexToUpdate: number) => {
         const updatedAnswerLetters : string[] = formattedAnswerLetters.map((letter: string, index:number) => index==indexToUpdate ? getBaseWord(letter) : letter );
         setFormattedAnswerLetters(updatedAnswerLetters);
+
+        const updatedAnswerButtons = createAnswerButtons(updatedAnswerLetters);
+        setFormattedAnswerButtons(updatedAnswerButtons);
+    }
+
+    const createAnswerButtons = (answerLetters : string[]) : React.ReactElement[] =>{
+        const puzzleButtonGroupConfig : PuzzleButtonGroupConfig = 
+            {buttonWords : answerLetters, 
+                onClickAction : updateAnswerLetterByIndex,
+                makeStyledButtonForString : makeShowButtonSX
+            }
+        const updatedAnswerButtons = createButtonsFromConfig(puzzleButtonGroupConfig);
+        return updatedAnswerButtons;
     }
 
     const checkAndUpdateIsSolved = (rawEnteredAnswer: string) => {
@@ -43,22 +83,17 @@ export function PuzzleInterface(props : PuzzleInterfaceProps){
         }
     }
 
+
     return(
         <div>
             <PuzzleButtonGroup 
-                buttonWords={formattedAnswerLetters} 
-                onClickAction={updateAnswerLetterByIndex}
-                //makeStyledButtonForString={makeShowButtonForFirstCharacter}
-                makeStyledButtonForString={makeShowButtonSX}
+                buttonArray={formattedAnswerButtons}
             />
             <PuzzleAnswerEntry
                 checkAndUpdateIsSolved={checkAndUpdateIsSolved}
             />
-            <PuzzleButtonGroup 
-                buttonWords={puzzleWords} 
-                onClickAction={toggleWordByIndex}
-                //makeStyledButtonForString={makeSolveButtonForFirstCharacter}
-                makeStyledButtonForString={makeSolveButtonSX}
+            <PuzzleButtonGroup
+                buttonArray={formattedPuzzleButtons}
             />
         </div>);
 }

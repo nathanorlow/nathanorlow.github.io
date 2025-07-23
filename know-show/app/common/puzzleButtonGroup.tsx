@@ -1,6 +1,6 @@
-import { Button, styled, type ButtonProps } from "@mui/material";
+import { Button } from "@mui/material";
 import { getBaseWord } from "~/util/modifyWord";
-import { green, grey } from "@mui/material/colors";
+//import { green, grey } from "@mui/material/colors";
 import { MARK_HIDDEN, MARK_SHOWN } from "~/constants";
 
 //This is a more general button group
@@ -12,7 +12,8 @@ interface PuzzleButtonGroupProps {
 }
 
 export interface PuzzleButtonGroupConfig {
-    buttonWords : string[]; //word object to display in the button group
+    delimitedString : string; //word object to display in the button group (with delimiter)
+    delimiter: string;
     onClickAction: (index: number) => void; //action to assign to the buttons
     makeStyledButtonForString: (inputString: string) => any;
 }
@@ -22,16 +23,19 @@ export function PuzzleButtonGroup(props : PuzzleButtonGroupProps){
 }
 
 export function createButtonsFromConfig(config: PuzzleButtonGroupConfig) : React.ReactElement[] {
-    const createdButtons = config.buttonWords.map(
+    const {delimitedString, delimiter, onClickAction, makeStyledButtonForString} = config;
+
+    const buttonWords = delimitedString.split(delimiter);
+    const createdButtons = buttonWords.map(
         (word, index) =>
         { 
             const firstCharacter = word.substring(0,1);
-            const buttonSx = config.makeStyledButtonForString(firstCharacter);
+            const buttonSx = makeStyledButtonForString(firstCharacter);
 
             return (
             <Button 
                 key={"button_" + index} 
-                onClick={() => config.onClickAction(index)}
+                onClick={() => onClickAction(index)}
                 sx={buttonSx}
             >
                 {getBaseWord(word)}
@@ -44,71 +48,21 @@ export function createButtonsFromConfig(config: PuzzleButtonGroupConfig) : React
 export function makeSolveButtonSX(firstCharacter: string){
     //p = padding
     if(firstCharacter === MARK_HIDDEN){
-        return {bgcolor: 'black', width: 'fit-content', minwidth: 0}
+        return {bgcolor: 'white', width: 'fit-content', minwidth: 0}
     } else if(firstCharacter === MARK_SHOWN){
         return {bgcolor: 'grey', width: 'fit-content', minWidth: 0}
     }else{
-        return {bgcolor: 'white', width: 'fit-content', minWidth: 0}
+        return {bgcolor: 'green', width: 'fit-content', minWidth: 0}
     }
 }
 
 export function makeShowButtonSX(firstCharacter: string){
     //p = padding
     if(firstCharacter === MARK_HIDDEN){
-        return {bgcolor: 'black', width: 'fit-content', minwidth: 0}
+        return {bgcolor: 'white', width: 'fit-content', minwidth: 0}
     } else if(firstCharacter === MARK_SHOWN){
         return {bgcolor: 'grey', width: 'fit-content', minWidth: 0}
     }else{
-        return {bgcolor: 'white', width: 'fit-content', minWidth: 0}
-    }
-}
-
-export function makeSolveButtonForFirstCharacter(firstCharacter: string){
-    if(firstCharacter === MARK_HIDDEN){
-        return styled(Button)<ButtonProps>(
-            ({theme}) => ({
-                color: grey[900],
-                backgroundColor: grey[900]
-            })
-        );
-    } else if(firstCharacter === MARK_SHOWN){
-        return styled(Button)<ButtonProps>( 
-            ({theme}) => ({
-                color: theme.palette.getContrastText(grey[400]),
-                backgroundColor: grey[400]
-            })
-        );
-    } else{
-        return styled(Button)<ButtonProps>(
-            ({theme}) => ({
-                color: theme.palette.getContrastText(grey[100]),
-                backgroundColor: grey[100]
-            })
-        );
-    }
-}
-
-export function makeShowButtonForFirstCharacter(firstCharacter: string) {
-    if (firstCharacter === MARK_HIDDEN) {        
-        return styled(Button)<ButtonProps>((
-            { theme }) => ({
-                color: theme.palette.getContrastText(green[700]),
-                backgroundColor: green[700]
-            })
-        );
-    } else if (firstCharacter === MARK_SHOWN) { //unused
-        return styled(Button)<ButtonProps>((
-            { theme }) => ({
-                color: theme.palette.getContrastText(grey[400]),
-                backgroundColor: grey[400]
-            })
-        );
-    } else {
-        return styled(Button)<ButtonProps>((
-            { theme }) => ({
-                color: theme.palette.getContrastText(grey[100]),
-                backgroundColor: grey[100]
-            })
-        );
+        return {bgcolor: 'black', width: 'fit-content', minWidth: 0}
     }
 }

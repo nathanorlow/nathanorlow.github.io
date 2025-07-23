@@ -1,6 +1,6 @@
 import { WORD_DELIMITER} from "~/constants";
-import { makeShowButtonForFirstCharacter, makeShowButtonSX, PuzzleButtonGroup } from "../common/puzzleButtonGroup";
-import { toggleWordHiddenFormat } from "~/util/modifyWord";
+import { createButtonsFromConfig, makeSolveButtonSX, PuzzleButtonGroup, type PuzzleButtonGroupConfig } from "../common/puzzleButtonGroup";
+import { modifyWordAtIndexInString, toggleWordHiddenFormat, type ModifyWordInStringInputs } from "~/util/modifyWord";
 import { encodeLink } from "./linkDisplay";
 
 //Puzzle interface for viewing and modifying the puzzleString
@@ -19,22 +19,37 @@ export function CreateInterface(props : CreateInterfaceProps){
     if(!puzzleString){
         return(<div></div>);
     }
-    const puzzleWords : string[] = puzzleString.split(WORD_DELIMITER);
     
-    const toggleWordByIndex = (index: number) => {
-        puzzleWords[index] = toggleWordHiddenFormat(puzzleWords[index]);
-        const newPuzzleString = puzzleWords.join(WORD_DELIMITER); 
+    const toggleWordByIndex = (indexToUpdate: number) => {
+        const modifyInputs: ModifyWordInStringInputs = {
+            inputString: puzzleString,
+            delimiter: WORD_DELIMITER,
+            desiredIndex: indexToUpdate,
+            modifyFunction: toggleWordHiddenFormat
+        };
+        const newPuzzleString = modifyWordAtIndexInString(modifyInputs);
         setPuzzleString(newPuzzleString);
+
         const newEncodedLinkString = encodeLink(newPuzzleString);
         updateEncodedLinkString(newEncodedLinkString);
     }
 
+        const createPuzzleButtons = (inputPuzzleString: string): React.ReactElement[] => {
+            const puzzleButtonGroupConfig : PuzzleButtonGroupConfig =
+            {
+                delimitedString: inputPuzzleString,
+                delimiter: WORD_DELIMITER,
+                onClickAction: toggleWordByIndex,
+                makeStyledButtonForString: makeSolveButtonSX
+            }
+            return createButtonsFromConfig(puzzleButtonGroupConfig);
+        }
+
+        const puzzleButtons = createPuzzleButtons(puzzleString);
+    
     return(<div>
             <PuzzleButtonGroup 
-                buttonArray={[]}
-                //buttonWords={puzzleWords} 
-                //onClickAction={toggleWordByIndex}
-               //makeStyledButtonForString={makeShowButtonSX}
+                buttonArray={puzzleButtons}
             />
         </div>);
 }

@@ -40,3 +40,19 @@ export function getBaseWord(word: string): string {
     return baseWord;
 }
 
+export interface ModifyWordInStringInputs {
+    inputString:string,
+    delimiter:string,
+    desiredIndex: number,
+    modifyFunction: (inputString: string) => string
+}
+
+//Modify a single word at a particular index in a delimited string
+export function modifyWordAtIndexInString(inputs: ModifyWordInStringInputs){
+    const {inputString: inputPuzzleString, delimiter, desiredIndex, modifyFunction} = inputs;
+    const oldWords: string[] = (inputPuzzleString.split(delimiter));
+    const newWords = oldWords.map(
+        (word:string, index:number) => index === desiredIndex ? modifyFunction(word) : word
+    );
+    return newWords.join(delimiter);
+}

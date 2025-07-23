@@ -17,12 +17,16 @@ export function PuzzleTextEntry(props: PuzzleTextEntryProps){
 const handlePuzzleAnswerChange = (changeEvent: any) => {
     const newPuzzleAnswer = changeEvent.target.value;
     props.savePuzzleAnswer(newPuzzleAnswer);
+    const answerAndTextAreaString = newPuzzleAnswer + COMPONENT_DELIMITER + props.puzzleTextAreaString;
+    console.log(`answer change -> Encode link ${answerAndTextAreaString}`);
+    props.updateEncodedLinkString(encodeLink(answerAndTextAreaString));
 }
 
 const handlePuzzleTextAreaChange = (changeEvent: any) => {
     const textAreaString = changeEvent.target.value;
     props.savePuzzleTextAreaString(textAreaString);
     const answerAndTextAreaString = props.puzzleAnswer + COMPONENT_DELIMITER + textAreaString;
+    console.log(`textarea change -> Encode link ${answerAndTextAreaString}`);
     props.updateEncodedLinkString(encodeLink(answerAndTextAreaString));
 };
 

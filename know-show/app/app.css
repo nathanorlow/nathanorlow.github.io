@@ -14,21 +14,54 @@ body {
   }
 }
 
-.centerMiddle {
+.mainLayout {
   margin: auto;
-  width:60%;
+  width:90%;
   padding:10px;
+  background-color: darkgreen;
 }
 
-.largeText {
+.mainTextEntry {
   margin: auto;
-  font-size:large;
+  width:100%;
+  padding:10px;
+  background-color: green;
+}
+
+
+.labelText {
+  margin: auto;
+  font-size:36px;
   display: block;
   text-align: center;
   color:darkblue;
 }
-.lightStyle {
-  background-color: lightblue;
+.puzzleAnswer{
+  font-size:26px;
+  background-color:lightgreen;
+  color: black;
+  padding: 10px;
+  margin: auto;
+  text-align: center;
+}
+.puzzlePrompt{
+  font-size:26px;
+  background-color:lightgreen;
+  color: black;
+  padding: 10px;
+  margin: auto;
+}
+
+.buttonInterface {
+  background-color: grey;
+  margin: auto;
+  padding: 10px;
+}
+
+.linkText{
+  font-size:18px;
+  padding: 10px;
+  margin: auto;
 }
 
 .mediumStyle {
@@ -41,13 +74,8 @@ body {
 }
 textarea {
   display: block;
-  margin: auto;
-  width: 90%;
-}
-
-.textAreaDefault {
-  border: 3px;
-  width: 90%;
+  margin: 10px;
+  width: 100%;
 }
 
 .answerEntry {

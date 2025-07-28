@@ -6,10 +6,9 @@ interface PuzzleTextEntryProps {
     puzzleAnswerLabel: string;
     puzzleAnswer: string;
     savePuzzleAnswer: (puzzleAnswer: string) => void;
-    textAreaLabel: string; //Label to display by text area
-    puzzleTextAreaString: string; //Puzzle string to display in its text area
-    savePuzzleTextAreaString: (puzzleTextAreaString: string) => void; //Function to save the string outside this component
-    updateEncodedLinkString: (encodedLinkString: string) => void; //Function to save the encoded link string
+    puzzlePromptLabel: string; //Label to display by text area
+    puzzlePrompt: string; //Puzzle string to display in its text area
+    savePuzzlePrompt: (puzzleTextAreaString: string) => void; //Function to save the string outside this component
 }
 
 export function PuzzleTextEntry(props: PuzzleTextEntryProps){
@@ -17,31 +16,27 @@ export function PuzzleTextEntry(props: PuzzleTextEntryProps){
 const handlePuzzleAnswerChange = (changeEvent: any) => {
     const newPuzzleAnswer = changeEvent.target.value;
     props.savePuzzleAnswer(newPuzzleAnswer);
-    const answerAndTextAreaString = newPuzzleAnswer + COMPONENT_DELIMITER + props.puzzleTextAreaString;
-    console.log(`answer change -> Encode link ${answerAndTextAreaString}`);
-    props.updateEncodedLinkString(encodeLink(answerAndTextAreaString));
 }
 
-const handlePuzzleTextAreaChange = (changeEvent: any) => {
+const handlePuzzlePromptChange = (changeEvent: any) => {
     const textAreaString = changeEvent.target.value;
-    props.savePuzzleTextAreaString(textAreaString);
-    const answerAndTextAreaString = props.puzzleAnswer + COMPONENT_DELIMITER + textAreaString;
-    console.log(`textarea change -> Encode link ${answerAndTextAreaString}`);
-    props.updateEncodedLinkString(encodeLink(answerAndTextAreaString));
+    props.savePuzzlePrompt(textAreaString);
 };
 
     return(
-        <div>
-            <label className="largeText">{props.puzzleAnswerLabel}</label> <br />
+        <div className="mainTextEntry">
+            <label className="labelText">{props.puzzleAnswerLabel}</label>
             <textarea
+                className="puzzleAnswer"
                 onChange={handlePuzzleAnswerChange}
                 rows={1}
             />
-
-            <label className="largeText">{props.textAreaLabel}</label> <br />
+            <br/>
+            <label className="labelText">{props.puzzlePromptLabel}</label>
             <textarea
-                value={props.puzzleTextAreaString}
-                onChange={handlePuzzleTextAreaChange}
+                className="puzzlePrompt"
+                value={props.puzzlePrompt}
+                onChange={handlePuzzlePromptChange}
                 rows={ROWS_FOR_TEXT_AREA}
             />
         </div>

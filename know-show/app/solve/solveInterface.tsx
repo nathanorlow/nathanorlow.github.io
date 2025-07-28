@@ -14,7 +14,6 @@ export function PuzzleInterface(props : PuzzleInterfaceProps){
     const [formattedAnswerString, setFormattedAnswerString] = useState(makeInitialFormattedCorrectAnswer(props.puzzleCorrectAnswer))
     const [interfacePuzzleString, setInterfacePuzzleString] = useState(props.initialPuzzleString);
     const [isSolved, setIsSolved] = useState(false);
-    //TODO: Need to add solution to link string in all update cases
     
     if(!interfacePuzzleString){
         return(<div>No puzzle string</div>);
@@ -65,7 +64,7 @@ export function PuzzleInterface(props : PuzzleInterfaceProps){
 
     const checkAndUpdateIsSolved = (rawEnteredAnswer: string) => {
         const enteredAnswer = rawEnteredAnswer.trim();
-        if (props.puzzleCorrectAnswer != null && props.puzzleCorrectAnswer === enteredAnswer) {
+        if (props.puzzleCorrectAnswer != null && props.puzzleCorrectAnswer.toLowerCase === enteredAnswer.toLowerCase) {
             alert("Correct!");
             setIsSolved(true);
         }else{

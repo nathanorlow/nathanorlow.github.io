@@ -8,13 +8,13 @@ interface LinkDisplayProps {
 export function LinkDisplay(props : LinkDisplayProps){
     return(
         <div>
-        <label className="largeText">{props.labelText}</label>
-        <br />
-        <textarea
-            readOnly
-            value={props.linkText}
-            rows={ROWS_FOR_TEXT_AREA}
-        />
+            <label className="labelText">{props.labelText}</label>
+            <textarea
+                className="linkText"
+                readOnly
+                value={props.linkText}
+                rows={ROWS_FOR_TEXT_AREA}
+            />
         </div>
     );
 }

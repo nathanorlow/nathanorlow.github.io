@@ -7,6 +7,12 @@ import { MARK_HIDDEN, MARK_SHOWN } from "~/constants";
 //it displays a series of strings on buttons
 //the button style depends on the text
 
+const BUTTON_DEFAULTS_SX = {fontSize: 20, width: 'fit-content', minwidth: 0, padding: 1, margin: 1};
+
+const HIDDEN_SX = {...BUTTON_DEFAULTS_SX, bgcolor: "black"};
+const SHOWN_SX = {...BUTTON_DEFAULTS_SX, bgcolor: "grey"};
+const VISIBLE_SX = {...BUTTON_DEFAULTS_SX, bgcolor: "white"};
+
 interface PuzzleButtonGroupProps {
     buttonArray : any[];
 }
@@ -48,21 +54,21 @@ export function createButtonsFromConfig(config: PuzzleButtonGroupConfig) : React
 export function makeSolveButtonSX(firstCharacter: string){
     //p = padding
     if(firstCharacter === MARK_HIDDEN){
-        return {bgcolor: 'white', width: 'fit-content', minwidth: 0}
+        return HIDDEN_SX
     } else if(firstCharacter === MARK_SHOWN){
-        return {bgcolor: 'grey', width: 'fit-content', minWidth: 0}
+        return SHOWN_SX
     }else{
-        return {bgcolor: 'green', width: 'fit-content', minWidth: 0}
+        return VISIBLE_SX
     }
 }
 
 export function makeShowButtonSX(firstCharacter: string){
     //p = padding
     if(firstCharacter === MARK_HIDDEN){
-        return {bgcolor: 'white', width: 'fit-content', minwidth: 0}
+        return HIDDEN_SX
     } else if(firstCharacter === MARK_SHOWN){
-        return {bgcolor: 'grey', width: 'fit-content', minWidth: 0}
+        return SHOWN_SX
     }else{
-        return {bgcolor: 'black', width: 'fit-content', minWidth: 0}
+        return VISIBLE_SX
     }
 }

@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
-import { getBaseWord } from "~/util/modifyWord";
 //import { green, grey } from "@mui/material/colors";
 import { MARK_HIDDEN, MARK_SHOWN } from "~/constants";
+import type { PuzzlePhrase } from "~/util/PuzzlePhrase";
 
 //This is a more general button group
 //it displays a series of strings on buttons
@@ -9,19 +9,17 @@ import { MARK_HIDDEN, MARK_SHOWN } from "~/constants";
 
 const BUTTON_DEFAULTS_SX = {fontSize: 20, width: 'fit-content', minwidth: 0, padding: 1, margin: 1};
 
-const HIDDEN_SX = {...BUTTON_DEFAULTS_SX, bgcolor: "black"};
-const SHOWN_SX = {...BUTTON_DEFAULTS_SX, bgcolor: "grey"};
-const VISIBLE_SX = {...BUTTON_DEFAULTS_SX, bgcolor: "white"};
+export const HIDDEN_SX = {...BUTTON_DEFAULTS_SX, bgcolor: "black"};
+export const SHOWN_SX = {...BUTTON_DEFAULTS_SX, bgcolor: "grey"};
+export const VISIBLE_SX = {...BUTTON_DEFAULTS_SX, bgcolor: "white"};
 
 interface PuzzleButtonGroupProps {
     buttonArray : any[];
 }
 
 export interface PuzzleButtonGroupConfig {
-    delimitedString : string; //word object to display in the button group (with delimiter)
-    delimiter: string;
+    puzzlePhrase : PuzzlePhrase; //word object to display in the button group (with delimiter)
     onClickAction: (index: number) => void; //action to assign to the buttons
-    makeStyledButtonForString: (inputString: string) => any;
 }
 
 export function PuzzleButtonGroup(props : PuzzleButtonGroupProps){
@@ -29,28 +27,26 @@ export function PuzzleButtonGroup(props : PuzzleButtonGroupProps){
 }
 
 export function createButtonsFromConfig(config: PuzzleButtonGroupConfig) : React.ReactElement[] {
-    const {delimitedString, delimiter, onClickAction, makeStyledButtonForString} = config;
+    const {puzzlePhrase, onClickAction} = config;
 
-    const buttonWords = delimitedString.split(delimiter);
-    const createdButtons = buttonWords.map(
-        (word, index) =>
+    const createdButtons = puzzlePhrase.sections.map(
+        (wordSection, index) =>
         { 
-            const firstCharacter = word.substring(0,1);
-            const buttonSx = makeStyledButtonForString(firstCharacter);
-
+            const buttonSx = wordSection.toButtonSX();
             return (
             <Button 
                 key={"button_" + index} 
                 onClick={() => onClickAction(index)}
                 sx={buttonSx}
             >
-                {getBaseWord(word)}
+                {wordSection.toPlainString()}
             </Button>)
         }
     );
     return createdButtons;
 };
 
+//Deprecated
 export function makeSolveButtonSX(firstCharacter: string){
     //p = padding
     if(firstCharacter === MARK_HIDDEN){
@@ -62,6 +58,7 @@ export function makeSolveButtonSX(firstCharacter: string){
     }
 }
 
+//Deprecated
 export function makeShowButtonSX(firstCharacter: string){
     //p = padding
     if(firstCharacter === MARK_HIDDEN){

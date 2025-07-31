@@ -1,10 +1,6 @@
 import { MARK_HIDDEN, MARK_SHOWN } from "~/constants";
 
 export function toggleWordHiddenFormat(word: string): string {
-    if (!word) {
-        return "";
-    };
-
     if (word.startsWith(MARK_HIDDEN)) {
         return getBaseWord(word);
     } else {

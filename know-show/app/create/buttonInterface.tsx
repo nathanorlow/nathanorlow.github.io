@@ -1,44 +1,29 @@
-import { WORD_DELIMITER} from "~/constants";
-import { createButtonsFromConfig, makeSolveButtonSX, PuzzleButtonGroup, type PuzzleButtonGroupConfig } from "../common/puzzleButtonGroup";
-import { modifyWordAtIndexInString, toggleWordHiddenFormat, type ModifyWordInStringInputs } from "~/util/modifyWord";
+import { createButtonsFromConfig, PuzzleButtonGroup, type PuzzleButtonGroupConfig } from "../common/puzzleButtonGroup";
+import { PuzzlePhrase } from "~/util/PuzzlePhrase";
 
 //Puzzle interface for viewing and modifying the puzzleString
 
 interface ButtonInterfaceProps {
-    puzzlePrompt : string; //The string to display in the interface
-    savePuzzlePrompt: (puzzlePrompt: string) => void //a function to save puzzleString changes from the display
+    puzzlePhrase : PuzzlePhrase;
+    savePuzzlePhrase : (puzzlePhrase: PuzzlePhrase) => void
 }
 
 export function ButtonInterface(props : ButtonInterfaceProps){
-    const setPuzzlePrompt = props.savePuzzlePrompt;
-    const puzzlePrompt : string = props.puzzlePrompt;
-    if(!puzzlePrompt){
-        return(<div></div>);
-    }
     
     const toggleWordByIndex = (indexToUpdate: number) => {
-        const modifyInputs: ModifyWordInStringInputs = {
-            inputString: puzzlePrompt,
-            delimiter: WORD_DELIMITER,
-            desiredIndex: indexToUpdate,
-            modifyFunction: toggleWordHiddenFormat
-        };
-        const newPuzzlePrompt = modifyWordAtIndexInString(modifyInputs);
-        setPuzzlePrompt(newPuzzlePrompt);
+        props.savePuzzlePhrase(props.puzzlePhrase.withToggledButton(indexToUpdate))
     }
 
-    const createPuzzleButtons = (inputPuzzleString: string): React.ReactElement[] => {
+    const createPuzzleButtons = (inputPuzzlePhrase: PuzzlePhrase): React.ReactElement[] => {
         const puzzleButtonGroupConfig : PuzzleButtonGroupConfig =
         {
-            delimitedString: inputPuzzleString,
-            delimiter: WORD_DELIMITER,
-            onClickAction: toggleWordByIndex,
-            makeStyledButtonForString: makeSolveButtonSX
+            puzzlePhrase: inputPuzzlePhrase,
+            onClickAction: toggleWordByIndex
         }
         return createButtonsFromConfig(puzzleButtonGroupConfig);
     }
 
-    const puzzleButtons = createPuzzleButtons(puzzlePrompt);
+    const puzzleButtons = createPuzzleButtons(props.puzzlePhrase);
     
     return(<div className="buttonInterface">
             <PuzzleButtonGroup 

@@ -1,65 +1,54 @@
 import { useState } from "react";
-import { createButtonsFromConfig, PuzzleButtonGroup } from "../common/puzzleButtonGroup";
+import { PuzzleButtonGroup } from "../common/puzzleButtonGroup";
 import { COMPONENT_DELIMITER } from "~/constants";
-import { toHiddenUnlessSpace } from "~/util/modifyWord";
-import { PuzzleAnswerEntry } from "./puzzleAnswerEntry";
+import { normalizeString, toHiddenUnlessSpace } from "~/util/modifyWord";
+import { PuzzleAnswerSubmit } from "./puzzleAnswerSubmit";
 import { PuzzlePhrase } from "~/util/PuzzlePhrase";
 
 //Puzzle interface for viewing and modifying the puzzleString
 interface PuzzleInterfaceProps {
+    //these are assumed to already be normalized
     puzzleCorrectAnswer : string;
     initialPuzzleString : string; //The string to display in the interface
 }
 
+export type ActionOnIndex = (indexToUpdate: number) => void;
+
 export function PuzzleInterface(props : PuzzleInterfaceProps){
-    const [isSolved, setIsSolved] = useState(false);
+    const [submittedAnswer, setSubmittedAnswer] = useState("");
     const [puzzlePhrase, setPuzzlePhrase] = useState(PuzzlePhrase.fromFormattedPromptString(props.initialPuzzleString));
     const [answerPhrase, setAnswerPhrase] = useState(PuzzlePhrase.fromFormattedAnswerString(makeInitialFormattedCorrectAnswer(props.puzzleCorrectAnswer)));
     
-    const showSectionByIndex = (indexToUpdate: number) => {
-        setPuzzlePhrase(puzzlePhrase.withSectionShownIfHidden(indexToUpdate));
-    }
 
-    const createPuzzleButtons = (inputPuzzlePhrase: PuzzlePhrase): React.ReactElement[] => {
-        return createButtonsFromConfig({
-            puzzlePhrase: inputPuzzlePhrase,
-            onClickAction: showSectionByIndex
-        });
-    }
-
-    const updateAnswerStringByIndex = (indexToUpdate: number) => {
-        setAnswerPhrase(answerPhrase.withSectionShownIfHidden(indexToUpdate));
-    }
-
-    const createAnswerButtons = (inputAnswerPhrase : PuzzlePhrase) : React.ReactElement[] => {
-        return createButtonsFromConfig({   
-            puzzlePhrase: inputAnswerPhrase,
-            onClickAction: updateAnswerStringByIndex
-        });
-    }
-
-    const checkAndUpdateIsSolved = (rawEnteredAnswer: string) => {
-        const enteredAnswer = rawEnteredAnswer.trim();
-        if (props.puzzleCorrectAnswer != null && props.puzzleCorrectAnswer.toLowerCase === enteredAnswer.toLowerCase) {
+    const onSubmitAnswer = (submitEvent: any) => {
+        submitEvent.preventDefault();
+        const rawSubmittedAnswer = submitEvent.target.value;
+        setSubmittedAnswer(normalizeString(rawSubmittedAnswer));
+        if (props.puzzleCorrectAnswer === submittedAnswer) {
             alert("Correct!");
-            setIsSolved(true);
         }else{
             alert('(Not correct)');
-            console.log(`entered |${enteredAnswer}| correct ${props.puzzleCorrectAnswer}`);
-            setIsSolved(false);
+            console.log(`submitted |${submittedAnswer}| correct ${props.puzzleCorrectAnswer}`);
         }
     }
 
-    const answerButtons = createAnswerButtons(answerPhrase);
-    const puzzleButtons = createPuzzleButtons(puzzlePhrase);
+    const showSectionByIndex: ActionOnIndex = (indexToUpdate: number) => {
+        setPuzzlePhrase(puzzlePhrase.withSectionShownIfHidden(indexToUpdate));
+    }
+    const updateAnswerStringByIndex: ActionOnIndex = (indexToUpdate: number) => {
+        setAnswerPhrase(answerPhrase.withSectionShownIfHidden(indexToUpdate));
+    }
+
+    const answerButtons = answerPhrase.createButtonsWithActionOnIndex(updateAnswerStringByIndex);
+    const puzzleButtons = puzzlePhrase.createButtonsWithActionOnIndex(showSectionByIndex);
 
     return(
         <div>
             <PuzzleButtonGroup 
                 buttonArray={answerButtons}
             />
-            <PuzzleAnswerEntry
-                checkAndUpdateIsSolved={checkAndUpdateIsSolved}
+            <PuzzleAnswerSubmit
+                onSubmitAnswer={onSubmitAnswer}
             />
             <PuzzleButtonGroup
                 buttonArray={puzzleButtons}

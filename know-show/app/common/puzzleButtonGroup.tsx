@@ -27,7 +27,7 @@ export function PuzzleButtonGroup(props : PuzzleButtonGroupProps){
     return (props.buttonArray);
 }
 
-export function createButtonsFromConfig(config: PuzzleButtonGroupConfig) : React.ReactElement[] {
+export function createButtonsFromPhrase(config: PuzzleButtonGroupConfig) : React.ReactElement[] {
     const {puzzlePhrase, onClickAction} = config;
 
     const createdButtons = puzzlePhrase.sections.map(

@@ -1,4 +1,4 @@
-import { MARK_HIDDEN, MARK_SHOWN } from "~/constants";
+import { MARK_HIDDEN, MARK_SHOWN, VALID_CHARACTER_REGEX } from "~/constants";
 
 export function toggleWordHiddenFormat(word: string): string {
     if (word.startsWith(MARK_HIDDEN)) {
@@ -34,6 +34,12 @@ export function getBaseWord(word: string): string {
     baseWord = baseWord.replaceAll(MARK_HIDDEN, '');
     baseWord = baseWord.replaceAll(MARK_SHOWN, '');
     return baseWord;
+}
+
+export function normalizeString(input: string): string {
+    const baseWord = input.trim().toLowerCase();
+    const baseLetters: string[] = baseWord.match(VALID_CHARACTER_REGEX) ?? [];
+    return baseLetters.join();
 }
 
 export interface ModifyWordInStringInputs {

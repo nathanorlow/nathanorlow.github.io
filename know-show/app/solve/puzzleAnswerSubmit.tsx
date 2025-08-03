@@ -3,30 +3,20 @@ import { useState } from "react";
 const DEFAULT_ENTERED_ANSWER = '(enter answer here)';
 
 interface PuzzleAnswerEntryProps {
-    checkAndUpdateIsSolved : (enteredAnswe: string) => void;
+    onSubmitAnswer : (submitEvent: any) => void;
 }
 
-export function PuzzleAnswerEntry(props: PuzzleAnswerEntryProps){
+export function PuzzleAnswerSubmit(props: PuzzleAnswerEntryProps){
     const [enteredAnswer, setEnteredAnswer] = useState(DEFAULT_ENTERED_ANSWER);
-    
-    const handleEnteredAnswerChange = (changeEvent: any) => {
-        const newPuzzleAnswer = changeEvent.target.value;
-        setEnteredAnswer(newPuzzleAnswer);
-    }
-
-    const handleSubmit = (submitEvent: any) => {
-        submitEvent.preventDefault();
-        props.checkAndUpdateIsSolved(enteredAnswer);
-    }
 
     return (
         <div className="formContainer">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={props.onSubmitAnswer}>
                 <label> 
                     <input
                     type="text"
                     value={enteredAnswer}
-                    onChange={handleEnteredAnswerChange}
+                    onChange={ (changeEvent: any) => setEnteredAnswer(changeEvent.target.value) }
                     className="answerEntry"
                     />
                 </label>

@@ -1,4 +1,4 @@
-import { createButtonsFromConfig, PuzzleButtonGroup, type PuzzleButtonGroupConfig } from "../common/puzzleButtonGroup";
+import {PuzzleButtonGroup } from "../common/puzzleButtonGroup";
 import { PuzzlePhrase } from "~/util/PuzzlePhrase";
 
 //Puzzle interface for viewing and modifying the puzzleString
@@ -14,16 +14,7 @@ export function ButtonInterface(props : ButtonInterfaceProps){
         props.savePuzzlePhrase(props.puzzlePhrase.withSectionToggled(indexToUpdate))
     }
 
-    const createPuzzleButtons = (inputPuzzlePhrase: PuzzlePhrase): React.ReactElement[] => {
-        const puzzleButtonGroupConfig : PuzzleButtonGroupConfig =
-        {
-            puzzlePhrase: inputPuzzlePhrase,
-            onClickAction: toggleSectionByIndex
-        }
-        return createButtonsFromConfig(puzzleButtonGroupConfig);
-    }
-
-    const puzzleButtons = createPuzzleButtons(props.puzzlePhrase);
+    const puzzleButtons = props.puzzlePhrase.createButtonsWithActionOnIndex(toggleSectionByIndex);
     
     return(<div className="buttonInterface">
             <PuzzleButtonGroup 

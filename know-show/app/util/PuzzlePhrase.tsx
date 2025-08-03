@@ -1,5 +1,7 @@
 import { COMPONENT_DELIMITER, WORD_DELIMITER } from "~/constants";
 import { PuzzleSection } from "./PuzzleSection"
+import { createButtonsFromPhrase } from "~/common/puzzleButtonGroup";
+import type { ActionOnIndex } from "~/solve/solveInterface";
 
 export class PuzzlePhrase {
     sections : PuzzleSection[];
@@ -47,4 +49,11 @@ export class PuzzlePhrase {
         this.sections[toggleIndex].showIfHidden();
         return new PuzzlePhrase(this.sections);
     }
+
+    public createButtonsWithActionOnIndex = (actionOnIndex: ActionOnIndex): React.ReactElement[] => {
+        return createButtonsFromPhrase({
+            puzzlePhrase: this,
+            onClickAction: actionOnIndex
+        });
+    }    
 }

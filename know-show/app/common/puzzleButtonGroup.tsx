@@ -7,7 +7,8 @@ import type { PuzzlePhrase } from "~/util/PuzzlePhrase";
 //it displays a series of strings on buttons
 //the button style depends on the text
 
-const BUTTON_DEFAULTS_SX = {fontSize: 20, width: 'fit-content', minwidth: 0, padding: 1, margin: 1};
+//margin -1 is ok with letters but not sections
+const BUTTON_DEFAULTS_SX = {fontSize: 20, width: 'fit-content', minWidth: 0};
 
 export const HIDDEN_SX = {...BUTTON_DEFAULTS_SX, bgcolor: "black"};
 export const SHOWN_SX = {...BUTTON_DEFAULTS_SX, bgcolor: "grey"};

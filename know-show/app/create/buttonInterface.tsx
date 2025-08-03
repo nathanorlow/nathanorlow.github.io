@@ -10,15 +10,15 @@ interface ButtonInterfaceProps {
 
 export function ButtonInterface(props : ButtonInterfaceProps){
     
-    const toggleWordByIndex = (indexToUpdate: number) => {
-        props.savePuzzlePhrase(props.puzzlePhrase.withToggledButton(indexToUpdate))
+    const toggleSectionByIndex = (indexToUpdate: number) => {
+        props.savePuzzlePhrase(props.puzzlePhrase.withSectionToggled(indexToUpdate))
     }
 
     const createPuzzleButtons = (inputPuzzlePhrase: PuzzlePhrase): React.ReactElement[] => {
         const puzzleButtonGroupConfig : PuzzleButtonGroupConfig =
         {
             puzzlePhrase: inputPuzzlePhrase,
-            onClickAction: toggleWordByIndex
+            onClickAction: toggleSectionByIndex
         }
         return createButtonsFromConfig(puzzleButtonGroupConfig);
     }

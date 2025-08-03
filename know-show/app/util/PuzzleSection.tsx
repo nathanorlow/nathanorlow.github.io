@@ -50,6 +50,12 @@ export class PuzzleSection {
         }
     }
 
+    public showIfHidden(){
+        if(this.status == Status.Hidden) {
+            this.status = Status.Shown;
+        }
+    }
+
     public toButtonSX(){
         if(this.status == Status.Hidden){
             return HIDDEN_SX

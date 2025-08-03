@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { createButtonsFromConfig, makeShowButtonSX, makeSolveButtonSX, PuzzleButtonGroup, type PuzzleButtonGroupConfig } from "../common/puzzleButtonGroup";
+import { createButtonsFromConfig, PuzzleButtonGroup } from "../common/puzzleButtonGroup";
 import { COMPONENT_DELIMITER } from "~/constants";
-import { getBaseWord, modifyWordAtIndexInString, toHiddenUnlessSpace, toRevealedWordIfHidden, type ModifyWordInStringInputs } from "~/util/modifyWord";
+import { toHiddenUnlessSpace } from "~/util/modifyWord";
 import { PuzzleAnswerEntry } from "./puzzleAnswerEntry";
+import { PuzzlePhrase } from "~/util/PuzzlePhrase";
 
 //Puzzle interface for viewing and modifying the puzzleString
 interface PuzzleInterfaceProps {
@@ -11,55 +12,30 @@ interface PuzzleInterfaceProps {
 }
 
 export function PuzzleInterface(props : PuzzleInterfaceProps){
-    const [formattedAnswerString, setFormattedAnswerString] = useState(makeInitialFormattedCorrectAnswer(props.puzzleCorrectAnswer))
-    const [interfacePuzzleString, setInterfacePuzzleString] = useState(props.initialPuzzleString);
     const [isSolved, setIsSolved] = useState(false);
+    const [puzzlePhrase, setPuzzlePhrase] = useState(PuzzlePhrase.fromFormattedPromptString(props.initialPuzzleString));
+    const [answerPhrase, setAnswerPhrase] = useState(PuzzlePhrase.fromFormattedAnswerString(makeInitialFormattedCorrectAnswer(props.puzzleCorrectAnswer)));
     
-    if(!interfacePuzzleString){
-        return(<div>No puzzle string</div>);
-    }
-    
-    const toggleWordByIndex = (indexToUpdate: number) => {
-        const modifyInputs: ModifyWordInStringInputs = {
-            inputString: interfacePuzzleString,
-            delimiter: COMPONENT_DELIMITER,
-            desiredIndex: indexToUpdate,
-            modifyFunction: toRevealedWordIfHidden
-        };
-        const newPuzzleString = modifyWordAtIndexInString(modifyInputs);
-        setInterfacePuzzleString(newPuzzleString);
+    const showSectionByIndex = (indexToUpdate: number) => {
+        setPuzzlePhrase(puzzlePhrase.withSectionShownIfHidden(indexToUpdate));
     }
 
-    const createPuzzleButtons = (inputPuzzleString: string): React.ReactElement[] => {
-        const puzzleButtonGroupConfig : PuzzleButtonGroupConfig =
-        {
-            delimitedString: inputPuzzleString,
-            delimiter: COMPONENT_DELIMITER,
-            onClickAction: toggleWordByIndex,
-            makeStyledButtonForString: makeSolveButtonSX
-        }
-        return createButtonsFromConfig(puzzleButtonGroupConfig);
+    const createPuzzleButtons = (inputPuzzlePhrase: PuzzlePhrase): React.ReactElement[] => {
+        return createButtonsFromConfig({
+            puzzlePhrase: inputPuzzlePhrase,
+            onClickAction: showSectionByIndex
+        });
     }
 
     const updateAnswerStringByIndex = (indexToUpdate: number) => {
-        const modifyInputs: ModifyWordInStringInputs = {
-            inputString: formattedAnswerString,
-            delimiter: COMPONENT_DELIMITER,
-            desiredIndex: indexToUpdate,
-            modifyFunction: getBaseWord
-        };
-        const newAnswerString = modifyWordAtIndexInString(modifyInputs);
-        setFormattedAnswerString(newAnswerString);
+        setAnswerPhrase(answerPhrase.withSectionShownIfHidden(indexToUpdate));
     }
 
-    const createAnswerButtons = (inputAnswerString : string) : React.ReactElement[] =>{
-        const puzzleButtonGroupConfig : PuzzleButtonGroupConfig = 
-            {   delimitedString : inputAnswerString, 
-                delimiter: COMPONENT_DELIMITER,
-                onClickAction : updateAnswerStringByIndex,
-                makeStyledButtonForString : makeShowButtonSX
-            }
-        return createButtonsFromConfig(puzzleButtonGroupConfig);
+    const createAnswerButtons = (inputAnswerPhrase : PuzzlePhrase) : React.ReactElement[] => {
+        return createButtonsFromConfig({   
+            puzzlePhrase: inputAnswerPhrase,
+            onClickAction: updateAnswerStringByIndex
+        });
     }
 
     const checkAndUpdateIsSolved = (rawEnteredAnswer: string) => {
@@ -74,8 +50,8 @@ export function PuzzleInterface(props : PuzzleInterfaceProps){
         }
     }
 
-    const answerButtons = createAnswerButtons(formattedAnswerString);
-    const puzzleButtons = createPuzzleButtons(interfacePuzzleString);
+    const answerButtons = createAnswerButtons(answerPhrase);
+    const puzzleButtons = createPuzzleButtons(puzzlePhrase);
 
     return(
         <div>
@@ -88,7 +64,8 @@ export function PuzzleInterface(props : PuzzleInterfaceProps){
             <PuzzleButtonGroup
                 buttonArray={puzzleButtons}
             />
-        </div>);
+        </div>
+    );
 }
 
 function makeInitialFormattedCorrectAnswer(correctAnswer: string) {

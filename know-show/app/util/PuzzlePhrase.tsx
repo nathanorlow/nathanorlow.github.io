@@ -1,4 +1,4 @@
-import { WORD_DELIMITER } from "~/constants";
+import { COMPONENT_DELIMITER, WORD_DELIMITER } from "~/constants";
 import { PuzzleSection } from "./PuzzleSection"
 
 export class PuzzlePhrase {
@@ -8,11 +8,18 @@ export class PuzzlePhrase {
         this.sections = sections;
     }
 
-    public toFormattedPromptString():string {
+    public toFormattedPromptString(): string {
         return this.sections.map(
             (section: PuzzleSection) => section.toFormattedString()
         ).join(WORD_DELIMITER);
     }
+
+    public toFormattedAnswerString(): string {
+        return this.sections.map(
+            (section: PuzzleSection) => section.toFormattedString()
+        ).join(WORD_DELIMITER);
+    }
+
 
     public static fromFormattedPromptString(inputString: string): PuzzlePhrase{
         const sections: PuzzleSection[] =
@@ -22,8 +29,22 @@ export class PuzzlePhrase {
         return new PuzzlePhrase(sections);
     }
 
-    public withToggledButton(toggleIndex:number): PuzzlePhrase{
+    public static fromFormattedAnswerString(inputString: string): PuzzlePhrase{
+        const sections: PuzzleSection[] =
+            inputString.split(COMPONENT_DELIMITER).map(
+                (stringSection) => PuzzleSection.fromFormattedString(stringSection)
+            );
+        return new PuzzlePhrase(sections);
+    }
+
+
+    public withSectionToggled(toggleIndex:number): PuzzlePhrase{
         this.sections[toggleIndex].toggleHiddenStatus();
+        return new PuzzlePhrase(this.sections);
+    }
+
+    public withSectionShownIfHidden(toggleIndex:number): PuzzlePhrase{
+        this.sections[toggleIndex].showIfHidden();
         return new PuzzlePhrase(this.sections);
     }
 }

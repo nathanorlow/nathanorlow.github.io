@@ -1,4 +1,3 @@
-import {PuzzleButtonGroup } from "../common/puzzleButtonGroup";
 import { PuzzlePhrase } from "~/util/PuzzlePhrase";
 
 //Puzzle interface for viewing and modifying the puzzleString
@@ -16,9 +15,7 @@ export function ButtonInterface(props : ButtonInterfaceProps){
 
     const puzzleButtons = props.puzzlePhrase.createButtonsWithActionOnIndex(toggleSectionByIndex);
     
-    return(<div className="buttonInterface">
-            <PuzzleButtonGroup 
-                buttonArray={puzzleButtons}
-            />
+    return(<div className="createButtonInterface">
+            {puzzleButtons} 
         </div>);
 }

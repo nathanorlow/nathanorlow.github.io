@@ -8,23 +8,15 @@ import type { PuzzlePhrase } from "~/util/PuzzlePhrase";
 //the button style depends on the text
 
 //margin -1 is ok with letters but not sections
-const BUTTON_DEFAULTS_SX = {fontSize: 20, width: 'fit-content', minWidth: 0};
+const BUTTON_DEFAULTS_SX = {fontSize: 20, width: 'fit-content', minWidth: 0, color: 'black'};
 
 export const HIDDEN_SX = {...BUTTON_DEFAULTS_SX, bgcolor: "black"};
-export const SHOWN_SX = {...BUTTON_DEFAULTS_SX, bgcolor: "grey"};
+export const SHOWN_SX = {...BUTTON_DEFAULTS_SX, bgcolor: "lightgray"};
 export const VISIBLE_SX = {...BUTTON_DEFAULTS_SX, bgcolor: "white"};
-
-interface PuzzleButtonGroupProps {
-    buttonArray : any[];
-}
 
 export interface PuzzleButtonGroupConfig {
     puzzlePhrase : PuzzlePhrase; //word object to display in the button group (with delimiter)
     onClickAction: (index: number) => void; //action to assign to the buttons
-}
-
-export function PuzzleButtonGroup(props : PuzzleButtonGroupProps){
-    return (props.buttonArray);
 }
 
 export function createButtonsFromPhrase(config: PuzzleButtonGroupConfig) : React.ReactElement[] {

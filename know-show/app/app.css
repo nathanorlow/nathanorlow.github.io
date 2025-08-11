@@ -14,28 +14,27 @@ body {
   }
 }
 
-.mainLayout {
+.createLayout, .solveLayout {
   margin: auto;
   width:90%;
   padding:10px;
   background-color: darkgreen;
 }
-
-.mainTextEntry {
+.createInterface {
   margin: auto;
   width:100%;
   padding:10px;
   background-color: green;
 }
 
-
-.labelText {
+.createLabelText {
   margin: auto;
   font-size:36px;
   display: block;
   text-align: center;
   color:darkblue;
 }
+
 .puzzleAnswer{
   font-size:26px;
   background-color:lightgreen;
@@ -44,6 +43,7 @@ body {
   margin: auto;
   text-align: center;
 }
+
 .puzzlePrompt{
   font-size:26px;
   background-color:lightgreen;
@@ -52,7 +52,13 @@ body {
   margin: auto;
 }
 
-.buttonInterface {
+textarea {
+  display: block;
+  margin: 10px;
+  width: 100%;
+}
+
+.createButtonInterface {
   background-color: grey;
   margin: auto;
   padding: 10px;
@@ -64,38 +70,43 @@ body {
   margin: auto;
 }
 
-.mediumStyle {
-  background-color: cornflowerblue;
-}
-
-.formContainer {
-  background-color: mediumblue;
-  padding: 10px;
-}
-textarea {
-  display: block;
-  margin: 10px;
-  width: 100%;
-}
-
-.answerEntry {
-  background-color: gray;
-  display:block;
+.solveInterface {
   margin:auto;
-}
-
-.submitButton {
   display:block;
-  margin:auto;
+  width:fit-content;
+  background-color: lightgreen;
+  padding:10px;
 }
 
-.buttonMain {
+.buttonGroup {
+  margin:auto;
   background-color: white;
-  
-  color: black;
+  display:block;
+  width:fit-content;
 }
 
-.buttonDark {
-  background-color: black;
-  color: white;
+
+.solveSubmitForm {
+  padding: 20px;
+  min-height: 200px;
+  margin: auto;
+  align-items: center;
+  width:fit-content;
+}
+
+.solveFormTextEntry {
+  background-color: gray;
+  margin-left:auto;
+  margin-right:auto;
+  margin-bottom:10px;
+  font-size: 30px;
+  text-align:center;
+}
+
+.solveFormSubmitButton {
+  display:block;
+  margin:auto;
+  padding:10px;
+  font-size:30px;
+  background-color: green;
 }

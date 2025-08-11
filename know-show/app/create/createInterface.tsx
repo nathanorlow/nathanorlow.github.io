@@ -1,7 +1,7 @@
 import { ROWS_FOR_TEXT_AREA } from "./create";
 import { PuzzlePhrase } from "~/util/PuzzlePhrase";
 
-interface PuzzleTextEntryProps {
+interface createInterfaceProps {
     puzzleAnswerLabel: string;
     puzzleAnswer: string;
     savePuzzleAnswer: (puzzleAnswer: string) => void;
@@ -10,7 +10,7 @@ interface PuzzleTextEntryProps {
     savePuzzlePhrase: (puzzlePhrase: PuzzlePhrase) => void; //Function to save the string outside this component
 }
 
-export function PuzzleTextEntry(props: PuzzleTextEntryProps){
+export function CreateInterface(props: createInterfaceProps){
 
     const handlePuzzleAnswerChange = (changeEvent: any) => {
         const newPuzzleAnswer = changeEvent.target.value;
@@ -25,15 +25,15 @@ export function PuzzleTextEntry(props: PuzzleTextEntryProps){
     const puzzlePrompt : string = props.puzzlePhrase.toFormattedPromptString();
 
     return(
-        <div className="mainTextEntry">
-            <label className="labelText">{props.puzzleAnswerLabel}</label>
+        <div className="createInterface">
+            <label className="createLabelText">{props.puzzleAnswerLabel}</label>
             <textarea
                 className="puzzleAnswer"
                 onChange={handlePuzzleAnswerChange}
                 rows={1}
             />
             <br/>
-            <label className="labelText">{props.puzzlePromptLabel}</label>
+            <label className="createLabelText">{props.puzzlePromptLabel}</label>
             <textarea
                 className="puzzlePrompt"
                 value={puzzlePrompt}

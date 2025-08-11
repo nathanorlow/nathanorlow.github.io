@@ -1,4 +1,4 @@
-import { PuzzleInterface } from "./solveInterface";
+import { SolveInterface } from "./solveInterface";
 import { useParams } from "react-router";
 import { COMPONENT_DELIMITER } from "~/constants";
 
@@ -24,14 +24,12 @@ export function Solve() {
   }
 
   return (
-    <div className="centerMiddle">
-      <div className="lightStyle">
+    <div className="solveLayout">
         {puzzleAnswerAndString}<br />
-        <PuzzleInterface 
+        <SolveInterface 
           puzzleCorrectAnswer={puzzleComponents[0]}
           initialPuzzleString={puzzleComponents[1] ?? ''}
         />
-      </div>
     </div>
   );
 }

@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { PuzzleButtonGroup } from "../common/puzzleButtonGroup";
+// import { PuzzleButtonGroup } from "../common/puzzleButtonGroup";
 import { COMPONENT_DELIMITER } from "~/constants";
 import { normalizeString, toHiddenUnlessSpace } from "~/util/modifyWord";
-import { PuzzleAnswerSubmit } from "./puzzleAnswerSubmit";
+import { SolveSubmitForm } from "./SolveSubmitForm";
 import { PuzzlePhrase } from "~/util/PuzzlePhrase";
 
 //Puzzle interface for viewing and modifying the puzzleString
-interface PuzzleInterfaceProps {
+interface SolveInterfaceProps {
     //these are assumed to already be normalized
     puzzleCorrectAnswer : string;
     initialPuzzleString : string; //The string to display in the interface
@@ -14,7 +14,7 @@ interface PuzzleInterfaceProps {
 
 export type ActionOnIndex = (indexToUpdate: number) => void;
 
-export function PuzzleInterface(props : PuzzleInterfaceProps){
+export function SolveInterface(props : SolveInterfaceProps){
     const [submittedAnswer, setSubmittedAnswer] = useState("");
     const [puzzlePhrase, setPuzzlePhrase] = useState(PuzzlePhrase.fromFormattedPromptString(props.initialPuzzleString));
     const [answerPhrase, setAnswerPhrase] = useState(PuzzlePhrase.fromFormattedAnswerString(makeInitialFormattedCorrectAnswer(props.puzzleCorrectAnswer)));
@@ -43,16 +43,16 @@ export function PuzzleInterface(props : PuzzleInterfaceProps){
     const puzzleButtons = puzzlePhrase.createButtonsWithActionOnIndex(showSectionByIndex);
 
     return(
-        <div>
-            <PuzzleButtonGroup 
-                buttonArray={answerButtons}
-            />
-            <PuzzleAnswerSubmit
+        <div className="solveInterface">
+            <div className="buttonGroup">
+                {answerButtons}
+            </div>
+            <SolveSubmitForm
                 onSubmitAnswer={onSubmitAnswer}
             />
-            <PuzzleButtonGroup
-                buttonArray={puzzleButtons}
-            />
+            <div className="buttonGroup">
+                {puzzleButtons}
+            </div>
         </div>
     );
 }

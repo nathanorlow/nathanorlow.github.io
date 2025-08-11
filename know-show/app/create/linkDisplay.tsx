@@ -8,7 +8,7 @@ interface LinkDisplayProps {
 export function LinkDisplay(props : LinkDisplayProps){
     return(
         <div>
-            <label className="labelText">{props.labelText}</label>
+            <label className="createLabelText">{props.labelText}</label>
             <textarea
                 className="linkText"
                 readOnly

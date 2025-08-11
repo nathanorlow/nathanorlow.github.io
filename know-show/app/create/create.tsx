@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PuzzleTextEntry } from "./puzzleTextEntry";
+import { CreateInterface } from "./createInterface";
 import { encodeLink, LinkDisplay } from "./linkDisplay";
 import { ButtonInterface } from "./buttonInterface";
 import { COMPONENT_DELIMITER } from "~/constants";
@@ -27,8 +27,8 @@ export function Create() {
 
   console.log("Encoded link string is " + encodedLinkString);
   return (
-    <div className="mainLayout">
-      <PuzzleTextEntry
+    <div className="createLayout">
+      <CreateInterface
         puzzleAnswerLabel="Enter Puzzle Answer"
         puzzleAnswer={puzzleAnswer}
         savePuzzleAnswer={setPuzzleAnswer}

@@ -44,13 +44,13 @@ export function SolveInterface(props : SolveInterfaceProps){
 
     return(
         <div className="solveInterface">
-            <div className="buttonGroup">
+            <div className="answerButtonGroup">
                 {answerButtons}
             </div>
             <SolveSubmitForm
                 onSubmitAnswer={onSubmitAnswer}
             />
-            <div className="buttonGroup">
+            <div className="promptButtonGroup">
                 {puzzleButtons}
             </div>
         </div>

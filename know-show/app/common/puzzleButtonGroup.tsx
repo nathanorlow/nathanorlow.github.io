@@ -26,14 +26,30 @@ export function createButtonsFromPhrase(config: PuzzleButtonGroupConfig) : React
         (wordSection, index) =>
         { 
             const buttonSx = wordSection.toButtonSX();
+            const {section, trailing} = wordSection.toSectionTrailing();
+            const sectionButton = (                
+                <Button 
+                    key={"button_" + index} 
+                    onClick={() => onClickAction(index)}
+                    sx={buttonSx}
+                >
+                    {section}
+                </Button> 
+            );
+            const trailingButton = (
+                <Button
+                    key={"trailing_" + index}
+                    sx={VISIBLE_SX}
+                >
+                    {trailing}
+                </Button>
+            )
+
             return (
-            <Button 
-                key={"button_" + index} 
-                onClick={() => onClickAction(index)}
-                sx={buttonSx}
-            >
-                {wordSection.toPlainString()}
-            </Button>)
+            <div className="buttonContainer" key={"button_container_" + index}>
+                {sectionButton}
+                {trailing ? trailingButton : ""}
+            </div>)
         }
     );
     return createdButtons;

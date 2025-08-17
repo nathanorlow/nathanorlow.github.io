@@ -73,15 +73,27 @@ textarea {
 .solveInterface {
   margin:auto;
   display:block;
-  width:fit-content;
+  width:100%;
   background-color: lightgreen;
   padding:10px;
 }
 
-.buttonGroup {
+.answerButtonGroup {
   margin:auto;
   background-color: white;
-  display:block;
+  width: fit-content
+}
+
+.promptButtonGroup {
+  margin:auto;
+  background-color: white;
+  display:inline-block;
+  text-align:center;
+}
+
+.buttonContainer {
+  margin: 5px;
+  display:inline-block;
   width:fit-content;
 }
 

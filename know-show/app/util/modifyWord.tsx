@@ -1,4 +1,5 @@
 import { MARK_HIDDEN, MARK_SHOWN, VALID_CHARACTER_REGEX } from "~/constants";
+import type { ISectionTrailing } from "./PuzzleSection";
 
 export function toggleWordHiddenFormat(word: string): string {
     if (word.startsWith(MARK_HIDDEN)) {
@@ -34,6 +35,21 @@ export function getBaseWord(word: string): string {
     baseWord = baseWord.replaceAll(MARK_HIDDEN, '');
     baseWord = baseWord.replaceAll(MARK_SHOWN, '');
     return baseWord;
+}
+
+export function getPlainSection(inputSection: string): ISectionTrailing {
+    const baseWord = getBaseWord(inputSection);
+    const matches: string[] | null = baseWord.match("([.,?!]*)$");
+    if(matches == null){
+        return {section: baseWord, trailing: ""};
+    }
+    const plainSection: string = baseWord.slice(0, baseWord.length - matches[1].length);
+    const trailing: string = matches[1];
+    if(matches[1]){
+        console.log("Output base " + plainSection );
+        console.log("Output trailing " + trailing );
+    }
+    return {section: plainSection, trailing};
 }
 
 export function normalizeString(input: string): string {

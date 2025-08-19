@@ -2,7 +2,7 @@ import { useState } from "react";
 // import { PuzzleButtonGroup } from "../common/puzzleButtonGroup";
 import { COMPONENT_DELIMITER } from "~/constants";
 import { normalizeString, toHiddenUnlessSpace } from "~/util/modifyWord";
-import { SolveSubmitForm } from "./SolveSubmitForm";
+import { SolveSubmitForm, type AnswerFormValues } from "./SolveSubmitForm";
 import { PuzzlePhrase } from "~/util/PuzzlePhrase";
 
 //Puzzle interface for viewing and modifying the puzzleString
@@ -20,16 +20,17 @@ export function SolveInterface(props : SolveInterfaceProps){
     const [answerPhrase, setAnswerPhrase] = useState(PuzzlePhrase.fromFormattedAnswerString(makeInitialFormattedCorrectAnswer(props.puzzleCorrectAnswer)));
     
 
-    const onSubmitAnswer = (submitEvent: any) => {
-        submitEvent.preventDefault();
-        const rawSubmittedAnswer = submitEvent.target.value;
-        setSubmittedAnswer(normalizeString(rawSubmittedAnswer));
-        if (props.puzzleCorrectAnswer === submittedAnswer) {
+    const onSubmitAnswer = (answerFormData: AnswerFormValues) => {
+        const rawSubmittedAnswer = answerFormData.answer;
+        console.log(`answer ${rawSubmittedAnswer}`);
+        const normalizedAnswer = normalizeString(rawSubmittedAnswer);
+        if (props.puzzleCorrectAnswer === normalizedAnswer) {
             alert("Correct!");
         }else{
             alert('(Not correct)');
-            console.log(`submitted |${submittedAnswer}| correct ${props.puzzleCorrectAnswer}`);
+            console.log(`submitted |${normalizedAnswer}| correct ${props.puzzleCorrectAnswer}`);
         }
+        setSubmittedAnswer(normalizedAnswer);
     }
 
     const showSectionByIndex: ActionOnIndex = (indexToUpdate: number) => {

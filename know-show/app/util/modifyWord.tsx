@@ -39,23 +39,23 @@ export function getBaseWord(word: string): string {
 
 export function getPlainSection(inputSection: string): ISectionTrailing {
     const baseWord = getBaseWord(inputSection);
-    const matches: string[] | null = baseWord.match("([.,?!]*)$");
+    const matches: string[] | null = baseWord.match("([.,?!]*\n*)$");
     if(matches == null){
         return {section: baseWord, trailing: ""};
     }
     const plainSection: string = baseWord.slice(0, baseWord.length - matches[1].length);
     const trailing: string = matches[1];
     if(matches[1]){
-        console.log("Output base " + plainSection );
-        console.log("Output trailing " + trailing );
+        // console.log("Output base " + plainSection );
+        // console.log("Output trailing " + trailing );
     }
     return {section: plainSection, trailing};
 }
 
 export function normalizeString(input: string): string {
-    const baseWord = input.trim().toLowerCase();
+    const baseWord: string = input.trim().toUpperCase();
     const baseLetters: string[] = baseWord.match(VALID_CHARACTER_REGEX) ?? [];
-    return baseLetters.join();
+    return baseLetters.join("");
 }
 
 export interface ModifyWordInStringInputs {

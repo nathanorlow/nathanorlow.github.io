@@ -45,10 +45,6 @@ export function getPlainSection(inputSection: string): ISectionTrailing {
     }
     const plainSection: string = baseWord.slice(0, baseWord.length - matches[1].length);
     const trailing: string = matches[1];
-    if(matches[1]){
-        // console.log("Output base " + plainSection );
-        // console.log("Output trailing " + trailing );
-    }
     return {section: plainSection, trailing};
 }
 

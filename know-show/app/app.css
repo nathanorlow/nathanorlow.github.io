@@ -18,8 +18,16 @@ body {
   margin: auto;
   width:90%;
   padding:10px;
+}
+
+.noneMode {
   background-color: darkgreen;
 }
+
+.blockedMode {
+  background-color: lightgreen;
+}
+
 .createInterface {
   margin: auto;
   width:100%;
@@ -97,6 +105,10 @@ textarea {
   width:fit-content;
 }
 
+.modeButton {
+  display:inline-block;
+  width:fit-content;
+}
 
 .solveSubmitForm {
   padding: 20px;

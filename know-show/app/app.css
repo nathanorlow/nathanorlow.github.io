@@ -105,6 +105,12 @@ textarea {
   width:fit-content;
 }
 
+.modeButtonContainer {
+  margin: auto;
+  display: block;
+  width:fit-content;
+}
+
 .modeButton {
   display:inline-block;
   width:fit-content;

@@ -5,24 +5,40 @@ export enum Mode {
     Blocked
 }
 
+const BLOCKED_COLOR = "lightgreen";
+const DEFAULT_COLOR = "white";
+
+export namespace Mode {
+    export function associatedColor(mode: Mode): string{
+        if(mode === Mode.Blocked){
+            return BLOCKED_COLOR;
+        }
+        return DEFAULT_COLOR;
+    }
+}
+
+const DEFAULT_MODE = Mode.None;
+
+export const isDefaultMode = (mode: Mode): boolean => {
+    return (mode === DEFAULT_MODE);
+};
+
 export interface ModeButtonProps {
     thisButtonMode: Mode;
     currentMode: Mode; //create mode
     setCurrentMode: (mode: Mode) => void;
-    backgroundColor: string; // such as 'rgba(0, 255, 0, 0.5)'
 }
 
 export function ModeButton(props: ModeButtonProps){
-    const {thisButtonMode, currentMode, setCurrentMode, backgroundColor} = props;
+    const {thisButtonMode, currentMode, setCurrentMode} = props;
+    const backgroundColor = Mode.associatedColor(thisButtonMode);
 
     const buttonSX = {bgcolor: backgroundColor, fontWeight: 'bold'};
 
     const toggleThisButtonMode = (): void => {
         if(currentMode == thisButtonMode){
-            console.log("Changing to none");
-            setCurrentMode(Mode.None);
+            setCurrentMode(DEFAULT_MODE);
         }else{
-            console.log("Changing to " + thisButtonMode);
             setCurrentMode(thisButtonMode);
         }
     }

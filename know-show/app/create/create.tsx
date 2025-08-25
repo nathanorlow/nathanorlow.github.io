@@ -52,6 +52,7 @@ export function Create() {
       <ButtonInterface 
         puzzlePhrase={puzzlePhrase}
         savePuzzlePhrase = {setPuzzlePhrase}
+        currentMode = {currentMode}
       />
       <br />
       <LinkDisplay

@@ -2,6 +2,7 @@ import { COMPONENT_DELIMITER, WORD_DELIMITER } from "~/constants";
 import { PuzzleSection } from "./PuzzleSection"
 import { createButtonsFromPhrase } from "~/common/puzzleButtonGroup";
 import type { ActionOnIndex } from "~/solve/solveInterface";
+import type { Mode } from "~/create/mode/ModeButton";
 
 export class PuzzlePhrase {
     sections : PuzzleSection[];
@@ -42,6 +43,11 @@ export class PuzzlePhrase {
 
     public withSectionToggled(toggleIndex:number): PuzzlePhrase{
         this.sections[toggleIndex].toggleHiddenStatus();
+        return new PuzzlePhrase(this.sections);
+    }
+
+    public withSectionModeSet(toggleIndex:number, newMode: Mode): PuzzlePhrase{
+        this.sections[toggleIndex].toggleMode(newMode);
         return new PuzzlePhrase(this.sections);
     }
 

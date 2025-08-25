@@ -9,12 +9,11 @@ export interface ModeInterfaceProps{
 export function ModeInterface(props: ModeInterfaceProps){
     const {currentMode, setCurrentMode} = props;
     return (
-        <div className="buttonContainer">
+        <div className="modeButtonContainer">
             <ModeButton
                 thisButtonMode={Mode.Blocked}
                 currentMode={currentMode}
                 setCurrentMode={setCurrentMode}
-                backgroundColor="lightgreen"
             />
         </div>
     );

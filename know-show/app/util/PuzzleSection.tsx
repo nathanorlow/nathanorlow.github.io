@@ -46,6 +46,10 @@ export class PuzzleSection {
         return {section: this.section, trailing: this.trailing};
     }
 
+    public isShown(): boolean {
+        return this.status === Status.Shown;
+    }
+
     public static fromFormattedString(inputString: string): PuzzleSection{
         const plainSection: ISectionTrailing = getPlainSection(inputString);
         if(inputString.startsWith(MARK_HIDDEN)){

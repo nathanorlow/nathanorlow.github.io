@@ -56,6 +56,11 @@ export class PuzzlePhrase {
         return new PuzzlePhrase(this.sections);
     }
 
+    public countShown(): number {
+        const shownCount = this.sections.filter((section) => section.isShown()).length;
+        return shownCount;
+    }
+
     public createButtonsWithActionOnIndex = (actionOnIndex: ActionOnIndex): React.ReactElement[] => {
         return createButtonsFromPhrase({
             puzzlePhrase: this,

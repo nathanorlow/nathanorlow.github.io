@@ -14,7 +14,9 @@ const BUTTON_DEFAULTS_SX = {fontSize: 20, width: 'fit-content', minWidth: 0, col
 export const HIDDEN_SX = {...BUTTON_DEFAULTS_SX, bgcolor: "black"};
 export const SHOWN_SX = {...BUTTON_DEFAULTS_SX, bgcolor: "lightgray"};
 export const VISIBLE_SX = {...BUTTON_DEFAULTS_SX, bgcolor: "white"};
-export const BLOCKED_SX = {...BUTTON_DEFAULTS_SX, bgcolor: Mode.associatedColor(Mode.Blocked)};
+export const BLOCKED_SX = {...BUTTON_DEFAULTS_SX, 
+    bgcolor: Mode.associatedColor(Mode.Blocked), 
+    color: Mode.associatedColor(Mode.Blocked)};
 
 export interface PuzzleButtonGroupConfig {
     puzzlePhrase : PuzzlePhrase; //word object to display in the button group (with delimiter)

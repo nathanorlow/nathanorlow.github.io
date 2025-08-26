@@ -4,7 +4,7 @@ interface SolvingDataDisplayProps {
 
 export function SolvingDataDisplay(props: SolvingDataDisplayProps){
     return (
-     <div>
+     <div className="dataDisplay">
         Total reveals: {props.revealCount}
      </div>
     );

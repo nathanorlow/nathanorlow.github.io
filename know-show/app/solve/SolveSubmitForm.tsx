@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-const DEFAULT_ENTERED_ANSWER = '(enter answer here)';
+const ANSWER_HELP_TEXT = '(enter answer here)'
+const DEFAULT_ENTERED_ANSWER = '';
 
 interface SolveSubmitFormProps {
     onSubmitAnswer : (submitEvent: any) => void;
@@ -21,6 +22,7 @@ export function SolveSubmitForm(props: SolveSubmitFormProps){
                 <label> 
                     <input {...register("answer")}
                     type="text"
+                    placeholder={ANSWER_HELP_TEXT}
                     value={enteredAnswer}
                     onChange={ (changeEvent: any) => setEnteredAnswer(changeEvent.target.value) }
                     className="solveFormTextEntry"

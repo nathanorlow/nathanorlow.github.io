@@ -8,6 +8,9 @@ export enum Mode {
 const BLOCKED_COLOR = "lightgreen";
 const DEFAULT_COLOR = "white";
 
+const MODE_BUTTON_DEFAULT_SX = {fontWeight: 'bold'};
+
+
 export namespace Mode {
     export function associatedColor(mode: Mode): string{
         if(mode === Mode.Blocked){
@@ -33,7 +36,7 @@ export function ModeButton(props: ModeButtonProps){
     const {thisButtonMode, currentMode, setCurrentMode} = props;
     const backgroundColor = Mode.associatedColor(thisButtonMode);
 
-    const buttonSX = {bgcolor: backgroundColor, fontWeight: 'bold'};
+    const buttonSX = {...MODE_BUTTON_DEFAULT_SX, bgcolor: backgroundColor};
 
     const toggleThisButtonMode = (): void => {
         if(currentMode == thisButtonMode){

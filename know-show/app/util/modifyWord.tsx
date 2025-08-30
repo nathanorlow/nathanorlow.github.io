@@ -1,4 +1,4 @@
-import { MARK_HIDDEN, MARK_SHOWN, VALID_CHARACTER_REGEX } from "~/constants";
+import { IS_MARK_REGEX, MARK_HIDDEN, MARK_SHOWN, VALID_CHARACTER_REGEX } from "~/constants";
 import type { ISectionTrailing } from "./PuzzleSection";
 
 export function toggleWordHiddenFormat(word: string): string {
@@ -32,8 +32,7 @@ export function toRevealedWordIfHidden(word: string): string {
 }
 export function getBaseWord(word: string): string {
     let baseWord = word;
-    baseWord = baseWord.replaceAll(MARK_HIDDEN, '');
-    baseWord = baseWord.replaceAll(MARK_SHOWN, '');
+    baseWord = baseWord.replaceAll(IS_MARK_REGEX, '');
     return baseWord;
 }
 

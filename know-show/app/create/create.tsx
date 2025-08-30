@@ -6,6 +6,8 @@ import { COMPONENT_DELIMITER } from "~/constants";
 import { PuzzlePhrase } from "~/util/PuzzlePhrase";
 import { ModeInterface } from "./mode/ModeInterface";
 import { Mode } from "./mode/ModeButton";
+import { useParams } from "react-router";
+import { getPuzzleComponentsFromString } from "~/solve/solve";
 
 export const ROWS_FOR_TEXT_AREA = 4;
 export const DEFAULT_PUZZLE_ANSWER = 'Puzzle Answer';
@@ -19,14 +21,17 @@ declare module '@mui/material/Button' {
 }
 
 export function Create() {
-  const [puzzleAnswer, setPuzzleAnswer] = useState(DEFAULT_PUZZLE_ANSWER);
-  const [puzzlePhrase, setPuzzlePhrase] = useState(PuzzlePhrase.fromFormattedPromptString(DEFAULT_PUZZLE_PROMPT));
+  const {encodedString} = useParams();
+  const {initialPuzzleAnswer, initialPuzzlePrompt} = getPuzzleComponentsFromString(encodedString);
+  const [puzzleAnswer, setPuzzleAnswer] = useState(initialPuzzleAnswer ?? DEFAULT_PUZZLE_ANSWER);
+  const initialPuzzlePhrase = PuzzlePhrase.fromFormattedPromptString(initialPuzzlePrompt ?? DEFAULT_PUZZLE_PROMPT);
+  const [puzzlePhrase, setPuzzlePhrase] = useState(initialPuzzlePhrase);
   const [currentMode, setCurrentMode] = useState(Mode.None);
 
-  //TODO convert puzzle phrase to formatted puzzle prompt, and use that as puzzlePrompt
   const puzzlePrompt = puzzlePhrase.toFormattedPromptString();
   const answerAndPromptString = puzzleAnswer + COMPONENT_DELIMITER + puzzlePrompt;
   const encodedLinkString = encodeLink(answerAndPromptString)
+  const solveLink = "/solve/" + encodedLinkString
 
   const createLayoutClassName : "createLayout blockedMode" | "createLayout noneMode" =
     (currentMode == Mode.Blocked) ?
@@ -56,11 +61,9 @@ export function Create() {
       />
       <br />
       <LinkDisplay
-        labelText="A link to this puzzle is"
-        linkText={encodedLinkString}
+        buttonText="Click here to solve this prompt or copy a link"
+        link={solveLink}
       />
     </div>
   );
 }
-
-

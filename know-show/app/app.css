@@ -18,6 +18,7 @@ body {
   margin: auto;
   width:90%;
   padding:10px;
+  background-color: gray;
 }
 
 .noneMode {
@@ -60,6 +61,11 @@ body {
   margin: auto;
 }
 
+.linkDisplay {
+  display: flex;
+  justify-content: center;
+}
+
 textarea {
   display: block;
   margin: 10px;
@@ -76,6 +82,11 @@ textarea {
   font-size:18px;
   padding: 10px;
   margin: auto;
+}
+
+.redirectButtonContainer {
+  margin: auto;
+  display: inline-block;
 }
 
 .solveInterface {

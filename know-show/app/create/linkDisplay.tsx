@@ -1,20 +1,22 @@
+import { RedirectButton } from "~/util/RedirectButton";
 import { ROWS_FOR_TEXT_AREA } from "./create";
 
 interface LinkDisplayProps {
-    labelText: string; //label to display
-    linkText: string; //String to display
+    buttonText: string; //label to display
+    link: string; //String to display
 }
 
 export function LinkDisplay(props : LinkDisplayProps){
+    const {buttonText, link} = props;
     return(
-        <div>
-            <label className="createLabelText">{props.labelText}</label>
-            <textarea
+        <div className="linkDisplay">
+            <RedirectButton buttonText={buttonText} buttonLink={link} />
+            {/*<textarea
                 className="linkText"
                 readOnly
-                value={props.linkText}
+                value={linkText}
                 rows={ROWS_FOR_TEXT_AREA}
-            />
+            />*/}
         </div>
     );
 }

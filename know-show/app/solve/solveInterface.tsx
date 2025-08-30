@@ -17,6 +17,7 @@ export type ActionOnIndex = (indexToUpdate: number) => void;
 
 export function SolveInterface(props : SolveInterfaceProps){
     const [submittedAnswer, setSubmittedAnswer] = useState("");
+    const [totalGuesses, setTotalGuesses] = useState(0);
     const [puzzlePhrase, setPuzzlePhrase] = useState(
         PuzzlePhrase.fromFormattedPromptString(
             props.initialPuzzleString
@@ -33,6 +34,7 @@ export function SolveInterface(props : SolveInterfaceProps){
         console.log(`raw answer |${rawSubmittedAnswer}|`);
         const normalizedAnswer = normalizeString(rawSubmittedAnswer);
         const normalizedCorrectAnswer = normalizeString(props.puzzleCorrectAnswer);
+        setTotalGuesses(totalGuesses + 1);
         if (normalizedCorrectAnswer === normalizedAnswer) {
             alert("Correct!");
         }else{
@@ -62,6 +64,7 @@ export function SolveInterface(props : SolveInterfaceProps){
             />
             <SolvingDataDisplay
                 revealCount={totalReveals}
+                guessCount={totalGuesses}
             />
             <br />
             <div className="promptButtonGroup">

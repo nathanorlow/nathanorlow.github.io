@@ -17,7 +17,7 @@ export type ActionOnIndex = (indexToUpdate: number) => void;
 
 export function SolveInterface(props : SolveInterfaceProps){
     const [submittedAnswer, setSubmittedAnswer] = useState("");
-    const [totalGuesses, setTotalGuesses] = useState(0);
+    const [wrongGuesses, setWrongGuesses] = useState(0);
     const [puzzlePhrase, setPuzzlePhrase] = useState(
         PuzzlePhrase.fromFormattedPromptString(
             props.initialPuzzleString
@@ -27,17 +27,24 @@ export function SolveInterface(props : SolveInterfaceProps){
             makeInitialFormattedCorrectAnswer(props.puzzleCorrectAnswer)
         ));
 
-    const totalReveals: number = answerPhrase.countShown() + puzzlePhrase.countShown();
+    const [revealsAtSolve, setRevealsAtSolve] = useState(-1);
+    const [isSolved, setIsSolved] = useState(false);
+    const currentReveals: number = isSolved ? revealsAtSolve :
+        answerPhrase.countShown() + puzzlePhrase.countShown();
     
     const onSubmitAnswer = (answerFormData: AnswerFormValues) => {
         const rawSubmittedAnswer = answerFormData.answer;
         console.log(`raw answer |${rawSubmittedAnswer}|`);
         const normalizedAnswer = normalizeString(rawSubmittedAnswer);
         const normalizedCorrectAnswer = normalizeString(props.puzzleCorrectAnswer);
-        setTotalGuesses(totalGuesses + 1);
         if (normalizedCorrectAnswer === normalizedAnswer) {
             alert("Correct!");
+            setRevealsAtSolve(currentReveals);
+            setIsSolved(true);
+            setPuzzlePhrase(puzzlePhrase.withAllSectionsShown());
+            setAnswerPhrase(answerPhrase.withAllSectionsShown());
         }else{
+            setWrongGuesses(wrongGuesses + 1);
             alert('(Not correct)');
             console.log(`submitted |${normalizedAnswer}| correct ${normalizedCorrectAnswer}`);
         }
@@ -54,17 +61,19 @@ export function SolveInterface(props : SolveInterfaceProps){
     const answerButtons = answerPhrase.createButtonsWithActionOnIndex(updateAnswerStringByIndex);
     const puzzleButtons = puzzlePhrase.createButtonsWithActionOnIndex(showSectionByIndex);
 
+    const doNothing = () => {};
+
     return(
         <div className="solveInterface">
             <div className="answerButtonGroup">
                 {answerButtons}
             </div>
             <SolveSubmitForm
-                onSubmitAnswer={onSubmitAnswer}
+                onSubmitAnswer={isSolved ? doNothing : onSubmitAnswer}
             />
             <SolvingDataDisplay
-                revealCount={totalReveals}
-                guessCount={totalGuesses}
+                revealCount={currentReveals}
+                wrongGuessCount={wrongGuesses}
             />
             <br />
             <div className="promptButtonGroup">

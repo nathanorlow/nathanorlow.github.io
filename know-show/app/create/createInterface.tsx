@@ -29,6 +29,7 @@ export function CreateInterface(props: createInterfaceProps){
             <label className="createLabelText">{props.puzzleAnswerLabel}</label>
             <textarea
                 className="puzzleAnswer"
+                value={props.puzzleAnswer}
                 onChange={handlePuzzleAnswerChange}
                 rows={1}
             />

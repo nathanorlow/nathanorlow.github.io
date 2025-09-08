@@ -47,7 +47,7 @@ export function Solve() {
         />
         <br />
         <LinkDisplay
-          buttonText="Click here to edit this prompt or copy a link"
+          buttonText="Click here to edit this prompt (can copy a link)"
           link={createLink}
         />
     </div>

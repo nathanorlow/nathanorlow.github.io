@@ -1,6 +1,6 @@
 interface SolvingDataDisplayProps {
     revealCount: number;
-    guessCount: number
+    wrongGuessCount: number
 }
 
 export function SolvingDataDisplay(props: SolvingDataDisplayProps){
@@ -8,7 +8,7 @@ export function SolvingDataDisplay(props: SolvingDataDisplayProps){
      <div className="dataDisplay">
         Total reveals: {props.revealCount}
         <br />
-        Total guesses: {props.guessCount}
+        Wrong guesses: {props.wrongGuessCount}
      </div>
     );
 }

@@ -61,7 +61,7 @@ export function Create() {
       />
       <br />
       <LinkDisplay
-        buttonText="Click here to solve this prompt or copy a link"
+        buttonText="Click here to solve this prompt (can copy a link)"
         link={solveLink}
       />
     </div>

@@ -40,7 +40,6 @@ export class PuzzlePhrase {
         return new PuzzlePhrase(sections);
     }
 
-
     public withSectionToggled(toggleIndex:number): PuzzlePhrase{
         this.sections[toggleIndex].toggleHiddenStatus();
         return new PuzzlePhrase(this.sections);
@@ -53,6 +52,11 @@ export class PuzzlePhrase {
 
     public withSectionShownIfHidden(toggleIndex:number): PuzzlePhrase{
         this.sections[toggleIndex].showIfHidden();
+        return new PuzzlePhrase(this.sections);
+    }
+
+    public withAllSectionsShown(): PuzzlePhrase{
+        this.sections.forEach( (section) => {section.showUnlessVisible()})
         return new PuzzlePhrase(this.sections);
     }
 

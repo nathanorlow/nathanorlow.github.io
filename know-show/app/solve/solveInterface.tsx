@@ -38,14 +38,14 @@ export function SolveInterface(props : SolveInterfaceProps){
         const normalizedAnswer = normalizeString(rawSubmittedAnswer);
         const normalizedCorrectAnswer = normalizeString(props.puzzleCorrectAnswer);
         if (normalizedCorrectAnswer === normalizedAnswer) {
-            alert("Correct!");
+            //alert("Correct!");
             setRevealsAtSolve(currentReveals);
             setIsSolved(true);
             setPuzzlePhrase(puzzlePhrase.withAllSectionsShown());
             setAnswerPhrase(answerPhrase.withAllSectionsShown());
         }else{
             setWrongGuesses(wrongGuesses + 1);
-            alert('(Not correct)');
+            //alert('(Not correct)');
             console.log(`submitted |${normalizedAnswer}| correct ${normalizedCorrectAnswer}`);
         }
         setSubmittedAnswer(normalizedAnswer);

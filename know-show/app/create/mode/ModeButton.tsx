@@ -1,4 +1,5 @@
 import Button from "@mui/material/Button";
+import { VERY_DARK_GREEN } from "~/common/puzzleButtonGroup";
 
 export enum Mode {
     None,

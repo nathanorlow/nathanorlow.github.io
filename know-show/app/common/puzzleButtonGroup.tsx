@@ -9,11 +9,12 @@ import type { PuzzlePhrase } from "~/util/PuzzlePhrase";
 //the button style depends on the text
 
 //margin -1 is ok with letters but not sections
-const BUTTON_DEFAULTS_SX = {fontSize: 20, width: 'fit-content', minWidth: 0, color: 'black'};
-
-export const HIDDEN_SX = {...BUTTON_DEFAULTS_SX, bgcolor: "black"};
-export const SHOWN_SX = {...BUTTON_DEFAULTS_SX, bgcolor: "lightgray"};
-export const VISIBLE_SX = {...BUTTON_DEFAULTS_SX, bgcolor: "white"};
+export const VERY_DARK_GREEN = "#003000";
+const VERY_LIGHT_GREEN = "#D0F0D0";
+const BUTTON_DEFAULTS_SX = {fontSize: 20, width: 'fit-content', minWidth: 0, color: VERY_DARK_GREEN};
+export const HIDDEN_SX = {...BUTTON_DEFAULTS_SX, bgcolor: VERY_DARK_GREEN};
+export const SHOWN_SX = {...BUTTON_DEFAULTS_SX, bgcolor: VERY_LIGHT_GREEN};
+export const VISIBLE_SX = {...BUTTON_DEFAULTS_SX, bgcolor: "lightgray"};
 export const BLOCKED_SX = {...BUTTON_DEFAULTS_SX, 
     bgcolor: Mode.associatedColor(Mode.Blocked), 
     color: Mode.associatedColor(Mode.Blocked)};

@@ -1,7 +1,7 @@
 import { useState } from "react";
 // import { PuzzleButtonGroup } from "../common/puzzleButtonGroup";
-import { COMPONENT_DELIMITER } from "~/constants";
-import { normalizeString, toHiddenUnlessSpace } from "~/util/modifyWord";
+import { COMPONENT_DELIMITER, MARK_BLOCKED } from "~/constants";
+import { normalizeString, toHiddenUnlessSpace as toHiddenUnlessSpace } from "~/util/modifyWord";
 import { SolveSubmitForm, type AnswerFormValues } from "./SolveSubmitForm";
 import { PuzzlePhrase } from "~/util/PuzzlePhrase";
 import { SolvingDataDisplay } from "./solvingDataDisplay";
@@ -84,5 +84,12 @@ export function SolveInterface(props : SolveInterfaceProps){
 }
 
 function makeInitialFormattedCorrectAnswer(correctAnswer: string) {
-    return correctAnswer.split("").map(toHiddenUnlessSpace).join(COMPONENT_DELIMITER);
+    const words = correctAnswer.split(" ");
+    const blockedFirstLetterWords = words.map((word) => {
+        const letters : string[] = word.split("");
+        const blockedFirstLetter = MARK_BLOCKED + letters[0] + MARK_BLOCKED;
+        const hiddenWord = word.substring(1).split("").map(toHiddenUnlessSpace).join(COMPONENT_DELIMITER);
+        return blockedFirstLetter + COMPONENT_DELIMITER + hiddenWord; // combine blocked and hidden
+    });
+    return blockedFirstLetterWords.join(COMPONENT_DELIMITER + " " + COMPONENT_DELIMITER);
 }

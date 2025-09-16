@@ -1,4 +1,4 @@
-import { IS_MARK_REGEX, MARK_HIDDEN, MARK_SHOWN, VALID_CHARACTER_REGEX } from "~/constants";
+import { IS_MARK_REGEX, MARK_BLOCKED, MARK_HIDDEN, MARK_SHOWN, VALID_CHARACTER_REGEX } from "~/constants";
 import type { ISectionTrailing } from "./PuzzleSection";
 
 export function toggleWordHiddenFormat(word: string): string {
@@ -12,8 +12,8 @@ export function toggleWordHiddenFormat(word: string): string {
 export function toHiddenUnlessSpace(word: string): string {
     if (!word) {
         return "";
-    } else if (word === " "){
-        return " ";
+    } else if (word === " " || word.startsWith(MARK_BLOCKED)){
+        return word;
     } else {
         return MARK_HIDDEN + word + MARK_HIDDEN;
     }

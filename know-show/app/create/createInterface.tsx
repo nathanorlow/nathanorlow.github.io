@@ -1,5 +1,7 @@
+import { retainCharacters } from "~/util/modifyWord";
 import { ROWS_FOR_TEXT_AREA } from "./create";
 import { PuzzlePhrase } from "~/util/PuzzlePhrase";
+import { VALID_ANSWER_CHARACTER_REGEX, VALID_PROMPT_CHARACTER_REGEX } from "~/constants";
 
 interface createInterfaceProps {
     puzzleAnswerLabel: string;
@@ -13,12 +15,14 @@ interface createInterfaceProps {
 export function CreateInterface(props: createInterfaceProps){
 
     const handlePuzzleAnswerChange = (changeEvent: any) => {
-        const newPuzzleAnswer = changeEvent.target.value;
+        const rawNewPuzzleAnswer = changeEvent.target.value;
+        const newPuzzleAnswer = retainCharacters(rawNewPuzzleAnswer, VALID_ANSWER_CHARACTER_REGEX);
         props.savePuzzleAnswer(newPuzzleAnswer);
     }
 
     const handlePuzzlePromptChange = (changeEvent: any) => {
-        const textAreaString = changeEvent.target.value;
+        const rawTextAreaString = changeEvent.target.value;
+        const textAreaString = retainCharacters(rawTextAreaString, VALID_PROMPT_CHARACTER_REGEX);
         props.savePuzzlePhrase(PuzzlePhrase.fromFormattedPromptString(textAreaString));
     };
 

@@ -51,7 +51,7 @@ export class PuzzleSection {
     }
 
     public static fromFormattedString(inputString: string): PuzzleSection{
-        const plainSection: ISectionTrailing = getPlainSection(inputString);
+        // const plainSection: ISectionTrailing = getPlainSection(inputString);
         if(inputString.startsWith(MARK_HIDDEN)){
             return PuzzleSection.fromFormattedStringWithStatus(inputString, Status.Hidden);
         }else if(inputString.startsWith(MARK_SHOWN)){

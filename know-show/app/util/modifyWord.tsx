@@ -1,4 +1,4 @@
-import { IS_MARK_REGEX, MARK_BLOCKED, MARK_HIDDEN, MARK_SHOWN, VALID_CHARACTER_REGEX } from "~/constants";
+import { IS_MARK_REGEX, MARK_BLOCKED, MARK_HIDDEN, MARK_SHOWN, TRAILING_CAPTURE_REGEX } from "~/constants";
 import type { ISectionTrailing } from "./PuzzleSection";
 
 export function toggleWordHiddenFormat(word: string): string {
@@ -6,16 +6,6 @@ export function toggleWordHiddenFormat(word: string): string {
         return getBaseWord(word);
     } else {
         return MARK_HIDDEN + getBaseWord(word) + MARK_HIDDEN;
-    }
-}
-
-export function toHiddenUnlessSpace(word: string): string {
-    if (!word) {
-        return "";
-    } else if (word === " " || word.startsWith(MARK_BLOCKED)){
-        return word;
-    } else {
-        return MARK_HIDDEN + word + MARK_HIDDEN;
     }
 }
 
@@ -38,7 +28,7 @@ export function getBaseWord(word: string): string {
 
 export function getPlainSection(inputSection: string): ISectionTrailing {
     const baseWord = getBaseWord(inputSection);
-    const matches: string[] | null = baseWord.match("([.,?!]*\n*)$");
+    const matches: string[] | null = baseWord.match(TRAILING_CAPTURE_REGEX);
     if(matches == null){
         return {section: baseWord, trailing: ""};
     }
@@ -47,10 +37,14 @@ export function getPlainSection(inputSection: string): ISectionTrailing {
     return {section: plainSection, trailing};
 }
 
-export function normalizeString(input: string): string {
-    const baseWord: string = input.trim().toUpperCase();
-    const baseLetters: string[] = baseWord.match(VALID_CHARACTER_REGEX) ?? [];
-    return baseLetters.join("");
+export function retainCharacters(inputString: string, validCharacterRegex: RegExp): string {
+    const validLetters: string[] = inputString.match(validCharacterRegex) ?? [];
+    return validLetters.join("");
+}
+
+export function normalizeString(inputString: string, validCharacterRegex: RegExp): string {
+    const baseWord: string = inputString.trim().toUpperCase();
+    return retainCharacters(baseWord, validCharacterRegex);
 }
 
 export interface ModifyWordInStringInputs {

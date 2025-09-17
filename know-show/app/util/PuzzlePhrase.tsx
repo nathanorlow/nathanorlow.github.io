@@ -1,4 +1,4 @@
-import { COMPONENT_DELIMITER, WORD_DELIMITER } from "~/constants";
+import { COMPONENT_DELIMITER, WORD_DELIMITER, WORD_DELIMITER_REGEX } from "~/constants";
 import { PuzzleSection } from "./PuzzleSection"
 import { createButtonsFromPhrase } from "~/common/puzzleButtonGroup";
 import type { ActionOnIndex } from "~/solve/solveInterface";
@@ -26,7 +26,7 @@ export class PuzzlePhrase {
 
     public static fromFormattedPromptString(inputString: string): PuzzlePhrase{
         const sections: PuzzleSection[] =
-            inputString.split(WORD_DELIMITER).map(
+            inputString.split(WORD_DELIMITER_REGEX).map(
                 (stringSection) => PuzzleSection.fromFormattedString(stringSection)
             );
         return new PuzzlePhrase(sections);

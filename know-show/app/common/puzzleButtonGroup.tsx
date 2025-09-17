@@ -11,7 +11,7 @@ import type { PuzzlePhrase } from "~/util/PuzzlePhrase";
 //margin -1 is ok with letters but not sections
 export const VERY_DARK_GREEN = "#003000";
 const VERY_LIGHT_GREEN = "#D0F0D0";
-const BUTTON_DEFAULTS_SX = {fontSize: 20, width: 'fit-content', minWidth: 0, color: VERY_DARK_GREEN};
+const BUTTON_DEFAULTS_SX = {fontSize: 20, width: 'fit-content', minWidth: 30, minHeight: 50, color: VERY_DARK_GREEN};
 export const HIDDEN_SX = {...BUTTON_DEFAULTS_SX, bgcolor: VERY_DARK_GREEN};
 export const SHOWN_SX = {...BUTTON_DEFAULTS_SX, bgcolor: VERY_LIGHT_GREEN};
 export const VISIBLE_SX = {...BUTTON_DEFAULTS_SX, bgcolor: "lightgray"};
@@ -26,7 +26,6 @@ export interface PuzzleButtonGroupConfig {
 
 export function createButtonsFromPhrase(config: PuzzleButtonGroupConfig) : React.ReactElement[] {
     const {puzzlePhrase, onClickAction} = config;
-
     const createdButtons = puzzlePhrase.sections.map(
         (wordSection, index) =>
         { 
@@ -38,7 +37,7 @@ export function createButtonsFromPhrase(config: PuzzleButtonGroupConfig) : React
                     onClick={() => onClickAction(index)}
                     sx={buttonSx}
                 >
-                    {section}
+                    {(section===' ') ? ' ' : section}
                 </Button> 
             );
             const trailingButton = (

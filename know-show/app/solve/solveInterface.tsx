@@ -1,7 +1,7 @@
 import { useState } from "react";
 // import { PuzzleButtonGroup } from "../common/puzzleButtonGroup";
-import { COMPONENT_DELIMITER, MARK_BLOCKED } from "~/constants";
-import { normalizeString, toHiddenUnlessSpace as toHiddenUnlessSpace } from "~/util/modifyWord";
+import { COMPONENT_DELIMITER, MARK_BLOCKED, VALID_ANSWER_CHARACTER_REGEX as VALID_ANSWER_CHARACTER_REGEX } from "~/constants";
+import { normalizeString, toggleWordHiddenFormat} from "~/util/modifyWord";
 import { SolveSubmitForm, type AnswerFormValues } from "./SolveSubmitForm";
 import { PuzzlePhrase } from "~/util/PuzzlePhrase";
 import { SolvingDataDisplay } from "./solvingDataDisplay";
@@ -35,8 +35,8 @@ export function SolveInterface(props : SolveInterfaceProps){
     const onSubmitAnswer = (answerFormData: AnswerFormValues) => {
         const rawSubmittedAnswer = answerFormData.answer;
         console.log(`raw answer |${rawSubmittedAnswer}|`);
-        const normalizedAnswer = normalizeString(rawSubmittedAnswer);
-        const normalizedCorrectAnswer = normalizeString(props.puzzleCorrectAnswer);
+        const normalizedAnswer = normalizeString(rawSubmittedAnswer, VALID_ANSWER_CHARACTER_REGEX);
+        const normalizedCorrectAnswer = normalizeString(props.puzzleCorrectAnswer, VALID_ANSWER_CHARACTER_REGEX);
         if (normalizedCorrectAnswer === normalizedAnswer) {
             //alert("Correct!");
             setRevealsAtSolve(currentReveals);
@@ -84,12 +84,13 @@ export function SolveInterface(props : SolveInterfaceProps){
 }
 
 function makeInitialFormattedCorrectAnswer(correctAnswer: string) {
-    const words = correctAnswer.split(" ");
-    const blockedFirstLetterWords = words.map((word) => {
-        const letters : string[] = word.split("");
-        const blockedFirstLetter = MARK_BLOCKED + letters[0] + MARK_BLOCKED;
-        const hiddenWord = word.substring(1).split("").map(toHiddenUnlessSpace).join(COMPONENT_DELIMITER);
-        return blockedFirstLetter + COMPONENT_DELIMITER + hiddenWord; // combine blocked and hidden
-    });
-    return blockedFirstLetterWords.join(COMPONENT_DELIMITER + " " + COMPONENT_DELIMITER);
+    if(!correctAnswer){
+        return "";
+    }
+    const letters : string[] = correctAnswer.split("");
+    const blockedFirstLetter = MARK_BLOCKED + letters.shift() + MARK_BLOCKED;
+    const hiddenWord = letters.map(toggleWordHiddenFormat).join(COMPONENT_DELIMITER); //hide other letters (including space)
+    const returnValue =  blockedFirstLetter + COMPONENT_DELIMITER + hiddenWord; // combine blocked and hidden
+    console.log("Return " + returnValue);
+    return returnValue;
 }

@@ -91,6 +91,5 @@ function makeInitialFormattedCorrectAnswer(correctAnswer: string) {
     const blockedFirstLetter = MARK_BLOCKED + letters.shift() + MARK_BLOCKED;
     const hiddenWord = letters.map(toggleWordHiddenFormat).join(COMPONENT_DELIMITER); //hide other letters (including space)
     const returnValue =  blockedFirstLetter + COMPONENT_DELIMITER + hiddenWord; // combine blocked and hidden
-    console.log("Return " + returnValue);
     return returnValue;
 }

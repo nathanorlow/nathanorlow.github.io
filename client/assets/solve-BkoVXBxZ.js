@@ -1,0 +1,1 @@
+import{w as o,o as t}from"./chunk-QMGIS6GS-zVnfdR1W.js";import{S as e}from"./solve-BEluTV9Q.js";function a({}){return[{title:"Know Show Solve"},{name:"description",content:"Know Show Solve page"}]}const i=o(function(){return t.jsx(e,{})});export{i as default,a as meta};
